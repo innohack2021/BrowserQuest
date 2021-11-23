@@ -38,6 +38,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.isDead = false;
             this.attackingMode = false;
             this.followingMode = false;
+            this.npcChatPartner = null;
 
             this.inspecting = null;
         },

@@ -2105,9 +2105,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 return;
             } else {
                 if(!this.player.disableKeyboardNpcTalk)
+                {
                     this.previousClickPosition = pos;
+                    this.player.npcChatPartner = null;
+                }
             }
-
             if(!this.player.isMoving()) {
                 this.cursorVisible = false;
                 this.processInput(pos);
@@ -2150,6 +2152,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     this.makePlayerGoToItem(entity);
                 }
                 else if(entity instanceof Npc) {
+
                     if(this.player.isAdjacentNonDiagonal(entity) === false) {
                         this.makePlayerTalkTo(entity);
                     } else {
@@ -2157,7 +2160,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             this.makeNpcTalk(entity);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
+                            {
                                 this.player.disableKeyboardNpcTalk = true;
+                                this.player.npcChatPartner = entity;
+                            }
+
                         }
                     }
                 }
@@ -2470,6 +2477,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 				}
 			}
             this.client.sendChat(message);
+            const chatPartner = this.player.npcChatPartner;
+            if(chatPartner)
+                this.makeNpcTalk(chatPartner);
         },
 
         createBubble: function(id, message) {
