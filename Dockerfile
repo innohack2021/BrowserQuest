@@ -1,13 +1,13 @@
-FROM ubuntu:latest
+FROM debian:9.11
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install  curl vim git -y
-RUN apt-get install g++ make memcached libncurses5 redis-server -y
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install  curl vim git -y
+RUN apt install g++ make memcached libncurses5 redis-server -y
 
 # node install
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
-RUN apt-get install nodejs -y
+RUN apt install nodejs -y
 
 # api server
 RUN git clone https://github.com/SangheonYi/mentta_express.git
