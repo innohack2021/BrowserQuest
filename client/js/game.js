@@ -1005,7 +1005,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
 
                     if(self.player.target instanceof Npc) {
-                        self.makeNpcTalk(self.player.target);
+                        self.makeNpcTalk(self.player.target, '');
                     } else if(self.player.target instanceof Chest) {
                         self.client.sendOpen(self.player.target);
                         self.audioManager.playSound("chest");
@@ -1777,11 +1777,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         /**
          *
          */
-        makeNpcTalk: async function(npc) {
+        makeNpcTalk: async function(npc, playerChat) {
             var msg;
 
             if(npc) {
-                msg = await npc.talk();
+                msg = await npc.talk(playerChat);
                 this.previousClickPosition = {};
                 if(msg) {
                     this.createBubble(npc.id, msg);
@@ -2157,7 +2157,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            this.makeNpcTalk(entity);
+                            this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
@@ -2479,7 +2479,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.client.sendChat(message);
             const chatPartner = this.player.npcChatPartner;
             if(chatPartner)
-                this.makeNpcTalk(chatPartner);
+                this.makeNpcTalk(chatPartner, message);
         },
 
         createBubble: function(id, message) {
