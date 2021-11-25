@@ -80,6 +80,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                 "platearmor", "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
                                 "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
                                 "item-platearmor", "item-redarmor", "item-goldenarmor", "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar", "item-firepotion"];
+
+            // mode
+            this.buildMode = false;
         },
 
         setup: function($bubbleContainer, canvas, background, foreground, input) {
@@ -2142,7 +2145,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
             && !this.player.isDead
             && !this.hoveringCollidingTile
-            && !this.hoveringPlateauTile) {
+            && !this.hoveringPlateauTile
+            && !this.buildMode) {
                 entity = this.getEntityAt(pos.x, pos.y);
 
         	    if(entity instanceof Mob || (entity instanceof Player && entity !== this.player && this.player.pvpFlag && this.pvpFlag)) {
@@ -2480,6 +2484,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             const chatPartner = this.player.npcChatPartner;
             if(chatPartner)
                 this.makeNpcTalk(chatPartner, message);
+            if (message) {
+                if (message == "aaa") {
+                    this.buildMode = true;
+                } else if (message == "bbb") {
+                    this.buildMode = false;
+                }
+            }
         },
 
         createBubble: function(id, message) {
