@@ -39,6 +39,9 @@ module.exports = Player = Character.extend({
         this.achievement = [];
 
         this.chatBanEndTime = 0;
+		this.isteleport = 0;
+		this.tel_x = 0;
+		this.tel_y = 0;
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
@@ -273,6 +276,17 @@ module.exports = Player = Character.extend({
 
                     self.server.handlePlayerVanish(self);
                     self.server.pushRelevantEntityListTo(self);
+					if (self.isteleport == 0) {
+						self.isteleport = 1;
+						self.tel_x = x;
+						self.tel_y = y;
+						databaseHandler.getTeleportNumber(x, y);
+					} else if (self.isteleport == 1) {
+						self.isteleport = 0;
+						databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+						self.tel_x = 0;
+						self.tel_y = 0;
+					}
                 }
             }
             else if(action === Types.Messages.OPEN) {
