@@ -13,12 +13,13 @@ RUN apt install nodejs -y
 RUN git clone https://github.com/SangheonYi/mentta_express.git
 WORKDIR mentta_express
 RUN npm install -d
+RUN npm install -g nodemon
 
 WORKDIR ../
 
 # BrowserQuest
-RUN git clone https://github.com/SangheonYi/BrowserQuest.git
-WORKDIR BrowserQuest
+RUN git clone https://github.com/innohack2021/mentta.git
+WORKDIR mentta
 RUN npm install -d
 
 EXPOSE 8000:8000
