@@ -366,7 +366,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
-            $(document).keyup(function(e) {
+            $(document).keyup(function(e) {//false
                 var key = e.which;
                 
                 if (game.started && !$('#chatbox').hasClass('active'))
@@ -402,13 +402,17 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 		        case Types.Keys.B:
 			    game.player.destroy = false;
 			    break;
+                case Types.Keys.O:
+                window.open("http://localhost:80", "con_web");
+			    game.player.showBrowser = false;
+			    break;
                         default:
                             break;
                     }
                 }
             });
 
-            $(document).keydown(function(e) {
+            $(document).keydown(function(e) {//true
                 var key = e.which,
                     $chat = $('#chatinput');
 
@@ -468,6 +472,9 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 			case Types.Keys.B:
 			    game.player.destroy = true;
 			    break;
+            case Types.Keys.O:
+                game.player.showBrowser = true;
+                break;
                         default:
                             break;
                     }
@@ -493,7 +500,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             //        }
             //    }
 
-                if(key === 13) {
+                if(key === 13) {//엔터쳤을 때 채팅창 나오는 것
                     if($chat.attr('value') !== '') {
                         if(game.player) {
                             game.say($chat.attr('value'));

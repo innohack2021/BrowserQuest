@@ -30,6 +30,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.moveRight = false;
 	    this.player.build = false;
 	    this.player.destroy = false;
+        this.player.showBrowser = false;
             this.player.disableKeyboardNpcTalk = false;
 
             // Game state

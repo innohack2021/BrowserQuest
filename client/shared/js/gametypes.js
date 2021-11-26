@@ -144,6 +144,7 @@ Types = {
         KEYPAD_6: 102,
         KEYPAD_8: 104,
         KEYPAD_2: 98,
+        O: 79,
 	V: 86,
 	B: 66
     }
