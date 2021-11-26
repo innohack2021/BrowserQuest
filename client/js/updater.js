@@ -198,25 +198,23 @@ define(['character', 'timer'], function(Character, Timer) {
             }
         },
 
-	updateHousePointset: function()
-	{
-	    if(!this.game.player)
-	        return;
-	    var game = this.game;
-	    var player = this.game.player;
-
-	    var pos = {
-		x: player.gridX,
-		y: player.gridY
-	    }
-	    if (player.build) {	
-	    	this.game.updateHousepoint(pos.x, pos.y);
-		player.build = false;
-	    }
-	    else if (player.destroy) {
-		this.game.delteHousepoint(pos.x, pos.y);
-		player.destroy = false;
-	    }
+		updateHousePointset: function() {
+			if(!this.game.player)
+		 		return;
+	   		var game = this.game;
+	    	var player = this.game.player;
+	    	var pos = {
+				x: player.gridX,
+				y: player.gridY
+	   		}
+	   	/*	if (player.build) {	
+	    		this.game.updateHousepoint(pos.x, pos.y);
+				player.build = false;
+	   		}
+	   		else if (player.destroy) {
+				this.game.delteHousepoint(pos.x, pos.y);
+				player.destroy = false;
+	 		}*/
 	},
 
         updateKeyboardMovement: function()

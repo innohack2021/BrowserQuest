@@ -584,13 +584,13 @@ module.exports = DatabaseHandler = cls.Class.extend({
       }
     },
 
-    getHousepoint: function(name, x, y){
+	getHousepoint: function(name, x, y){
 		var spname = 'u:'+ name + ' ';
 		var check = 0;
 
 		client.lrange('m:house', 0, -1, function(err, items) {
-
 			var i;
+
 			if (err) throw err;
 			for (i = 0; i < items.length; i++){
 				if (items[i].replace(spname, ' ') === (' ' + x + ' ' + y)) {
@@ -606,7 +606,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 				return ;
 			}
 		});
-     },
+   },
 
 	delHousepoint: function(name, x, y){
 		client.lrange('m:house', 0, -1, function(err, items) {
@@ -620,6 +620,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 			});
        	});
      },
+
 	getTeleportNumber: function(x, y){
 		client.lrange('m:teleport', 0, -1, function(err, items){
 			if (err) throw err;
@@ -643,6 +644,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
 			}
 		});
 	},
+
 	outTeleportNumber: function(x, y) {
 		client.lrange('m:teleport', 0, -1, function(err, items){
 			if (err) throw err;

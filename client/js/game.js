@@ -28,8 +28,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.moveDown = false;
             this.player.moveLeft = false;
             this.player.moveRight = false;
-	    this.player.build = false;
-	    this.player.destroy = false;
+	    	this.player.build = false;
+	    	this.player.destroy = false;
             this.player.disableKeyboardNpcTalk = false;
 
             // Game state
@@ -395,6 +395,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.hoveringCollidingTile && this.started) {
                 this.targetColor = "rgba(255, 50, 50, 0.5)";
             }
+			else if (this.buildMode && this.player.build && !this.player.destroy)
+				this.targetColor = "rgba(0, 0, 145, 0.5)";
+			else if (this.buildMode && !this.player.build && this.player.destroy)
+				this.targetColor = "rgba(110, 25, 128, 0.5)";
             else {
                 this.targetColor = "rgba(255, 255, 255, 0.5)";
             }
@@ -2131,8 +2135,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             } else {
                 this.previousClickPosition = pos;
             }
-
-            this.processInput(pos);
+			if (!this.buildMode){
+	            this.processInput(pos);
+			}else{
+				if (this.player.build && !this.player.destroy){
+					this.updateHousepoint(pos.x,pos.y);
+				}else if (!this.player.build && this.player.destroy){
+					this.delteHousepoint(pos.x,pos.y);
+				}
+			}
         },
 
         /**
@@ -2148,7 +2159,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             && !this.player.isDead
             && !this.hoveringCollidingTile
             && !this.hoveringPlateauTile
-            && !this.buildMode) {
+			&& !this.buildMode) {
                 entity = this.getEntityAt(pos.x, pos.y);
 
         	    if(entity instanceof Mob || (entity instanceof Player && entity !== this.player && this.player.pvpFlag && this.pvpFlag)) {
@@ -2489,8 +2500,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if (message) {
                 if (message == "aaa") {
                     this.buildMode = true;
+					this.player.build = false;
+					this.player.destroy = false;
                 } else if (message == "bbb") {
                     this.buildMode = false;
+					this.player.build = false;
+					this.player.destroy = false;
                 }
             }
         },
@@ -2736,13 +2751,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
 
-	updateHousepoint: function(x, y) {
-	    this.client.sendBuild(x,y);
-	},
+		updateHousepoint: function(x, y) {
+	    	this.client.sendBuild(x,y);
+		},
 
-	delteHousepoint: function(x,y) {
-	    this.client.sendDestroy(x,y);
-	},
+		delteHousepoint: function(x,y) {
+	    	this.client.sendDestroy(x,y);
+		},
 
         checkUndergroundAchievement: function() {
             var music = this.audioManager.getSurroundingMusic(this.player);
