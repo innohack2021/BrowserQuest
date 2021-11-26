@@ -39,9 +39,12 @@ module.exports = Player = Character.extend({
         this.achievement = [];
 
         this.chatBanEndTime = 0;
+        this.isteleport = 0;
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
+            var tel_x,
+				tel_y;
 
             log.debug("Received: "+message);
             if(!check(message)) {
@@ -273,6 +276,14 @@ module.exports = Player = Character.extend({
 
                     self.server.handlePlayerVanish(self);
                     self.server.pushRelevantEntityListTo(self);
+					//jawpark
+					if (self.isteleport == 0)
+					{
+						self.isteleport = 1;
+					}
+					else if (self.isteleport == 1)
+					{
+					}
                 }
             }
             else if(action === Types.Messages.OPEN) {
