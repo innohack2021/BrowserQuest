@@ -1,5 +1,5 @@
 {
-    "host": "127.0.0.1",
+    "host": "menthangverse.42seoul.kr",
     "port": 8000,
     "dispatcher": false
 }
