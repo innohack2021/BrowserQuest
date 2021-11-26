@@ -290,6 +290,19 @@ module.exports = Player = Character.extend({
                     databaseHandler.setCheckpoint(self.name, self.x, self.y);
                 }
             }
+	    else if (action == Types.Messages.BUILD) {
+		log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ")");
+		var x = message[1],
+		    y = message[2];
+		databaseHandler.getHousepoint(self.name, x, y);
+	    }
+	    else if (action == Types.Messages.DESTROY) {
+		log.info("DESTROY: " + self.name + " (" + message[1] + ", " + message[2] + ")");
+		var x = message[1],
+		    y = message[2];
+		databaseHandler.delHousepoint(self.name, x, y);
+
+	    }
             else if(action === Types.Messages.INVENTORY){
                 log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
                 var inventoryNumber = message[2],

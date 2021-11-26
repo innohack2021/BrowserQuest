@@ -141,6 +141,29 @@ Messages.Teleport = Message.extend({
     }
 });
 
+Message.Build = Message.extend({
+    init: function (entitiy) {
+	this.entity = entity;
+    },
+    serialize: function() {
+	return [Types.Messages.BUILD,
+		this.entity.x,
+		this.entity.y];
+    }
+});
+
+Message.DESTROY = Message.extend({
+    init: function (entitiy) {
+	 this.entity = entity;
+    },
+    serialize: function() {
+	return [Types.Messages.DESTROY,
+		this.entity.x,
+		this.entity.y];
+    }
+});
+
+
 Messages.Damage = Message.extend({
     init: function (entity, points, hp, maxHp) {
         this.entity = entity;

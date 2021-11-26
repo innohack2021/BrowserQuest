@@ -582,5 +582,43 @@ module.exports = DatabaseHandler = cls.Class.extend({
           }
         });
       }
-    }
+    },
+
+    getHousepoint: function(name, x, y){
+      var spname = 'u:'+ name + ' ';
+      var check = 0;
+
+      client.lrange('m:house', 0, -1, function(err, items) {
+
+	var i;
+
+        if (err) throw err;
+	for (i = 0; i < items.length; i++){
+	    if (items[i].replace(spname, ' ') === (' ' + x + ' ' + y)) {
+	      check = 1;
+	    }
+	}
+	if(check == 0){
+	   client.lpush('m:house', 'u:' + name + ' ' + x + ' ' + y);
+	   log.info('Get House Point: ' + name + ' (' + x + ' ' + y + ')');
+	   return ;
+	}
+	else {
+	   log.info('The place that already exists');
+	   return ;
+	}
+      });
+     },
+     delHousepoint: function(name, x, y){
+       client.lrange('m:house', 0, -1, function(err, items) {
+	if (err) throw err;
+	items.forEach(function(item, i) {
+	  if (item == ('u:' + name + ' ' + x + ' ' + y)) {
+	     client.lrem('m:house', 1, ('u:' + name + ' ' + x + ' ' + y));
+	     log.info('del House Point: ' + name + ' (' + x + ',' + y + ')');
+	     return ;
+	  }
+	});
+       });
+     }
 });

@@ -32,6 +32,8 @@ Types = {
         PVP: 28,
         GUILD: 29,
         GUILDERROR: 30,
+	BUILD: 31,
+	DESTROY: 32,
         GUILDERRORTYPE: {
         	DOESNOTEXIST: 1,
         	BADNAME: 2,
@@ -141,7 +143,9 @@ Types = {
         KEYPAD_4: 100,
         KEYPAD_6: 102,
         KEYPAD_8: 104,
-        KEYPAD_2: 98
+        KEYPAD_2: 98,
+	V: 86,
+	B: 66
     }
 };
 

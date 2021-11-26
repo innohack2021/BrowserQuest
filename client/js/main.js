@@ -199,6 +199,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     var initGame = function() {
         require(['game'], function(Game) {
 
+			var self = this;
             var canvas = document.getElementById("entities"),
                 background = document.getElementById("background"),
                 foreground = document.getElementById("foreground"),
@@ -395,6 +396,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                             game.player.moveDown = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
+			case Types.Keys.V:
+			    game.player.build = false;
+			    break;
+		        case Types.Keys.B:
+			    game.player.destroy = false;
+			    break;
                         default:
                             break;
                     }
@@ -455,6 +462,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         case Types.Keys.P:
                             $('#playercount').click();
                             break;
+			case Types.Keys.V:
+			    game.player.build = true;
+			    break;
+			case Types.Keys.B:
+			    game.player.destroy = true;
+			    break;
                         default:
                             break;
                     }

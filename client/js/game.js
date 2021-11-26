@@ -28,6 +28,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.moveDown = false;
             this.player.moveLeft = false;
             this.player.moveRight = false;
+	    this.player.build = false;
+	    this.player.destroy = false;
             this.player.disableKeyboardNpcTalk = false;
 
             // Game state
@@ -2713,7 +2715,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         updatePlayerCheckpoint: function() {
             var checkpoint = this.map.getCurrentCheckpoint(this.player);
-
+	
             if(checkpoint) {
                 var lastCheckpoint = this.player.lastCheckpoint;
                 if(!lastCheckpoint || (lastCheckpoint && lastCheckpoint.id !== checkpoint.id)) {
@@ -2722,6 +2724,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             }
         },
+
+	updateHousepoint: function(x, y) {
+	    this.client.sendBuild(x,y);
+	},
+
+	delteHousepoint: function(x,y) {
+	    this.client.sendDestroy(x,y);
+	},
 
         checkUndergroundAchievement: function() {
             var music = this.audioManager.getSurroundingMusic(this.player);
