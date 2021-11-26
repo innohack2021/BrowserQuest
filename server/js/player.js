@@ -10,7 +10,7 @@ var cls = require("./lib/class"),
     check = require("./format").check,
     Types = require("../../shared/js/gametypes")
     bcrypt = require('bcrypt');
-//const shell = require('shelljs');
+const shell = require('shelljs');
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
