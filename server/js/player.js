@@ -284,32 +284,40 @@ module.exports = Player = Character.extend({
 	                    self.isteleport = 1;
                         save_x = message[1],//텔레포트 좌표 저장
                         save_y = message[2];
-                        console.log('docker build . -t bq_image_' + save_x + '_' + save_y);
-                        console.log('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y)
+                        //console.log('docker build . -t bq_image_' + save_x + '_' + save_y);
+                        //console.log('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y)
 
-	                    /*shell.cd('/BrowserQuest/bq_docker/bq_server')
+	                    shell.cd('/mentta/bq_server')
 
 	                    //실행시키고 싶은 쉘 스크립트 주소 넣기
-	                    if(shell.exec('./docker_start.sh').code !== 0) {
+	                    if(shell.exec('docker build . -t bq_image_' + save_x + '_' + save_y).code !== 0) {
 		                    shell.echo('Error: command failed')
-		                    shell.exit(1)
+		                    //shell.exit(1)
 	                    }
-                        */
+
+                        if(shell.exec('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y).code !== 0) {
+		                    shell.echo('Error: command failed')
+		                    //shell.exit(1)
+	                    }
                     }
                     else if (self.isteleport == 1)
                     {
 	                    log.info("TELEPORT OUTSIDE: " + self.name);
 	                    self.isteleport = 0;
 
-                        console.log('docker stop ' + save_x + '_' + save_y);
-                        console.log('docker rm ' + save_x + '_' + save_y);
-	                    /*shell.cd('/BrowserQuest/bq_docker/bq_server')
+                        //console.log('docker stop ' + save_x + '_' + save_y);
+                        //console.log('docker rm ' + save_x + '_' + save_y);
+	                    shell.cd('/mentta/bq_server')
 
-	                    if(shell.exec('./docker_end.sh').code !== 0) {
+	                    if(shell.exec('docker stop ' + save_x + '_' + save_y).code !== 0) {
 		                    shell.echo('Error: command failed')
-		                    shell.exit(1)
+		                    //shell.exit(1)
 	                    }
-                        */
+
+                        if(shell.exec('./docker_end.sh').code !== 0) {
+		                    shell.echo('docker rm ' + save_x + '_' + save_y)
+		                    //shell.exit(1)
+	                    }
                     }
                 }
             }
