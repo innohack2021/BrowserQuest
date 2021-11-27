@@ -2128,7 +2128,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-
+            console.log("💙", this.map.isColliding(pos.x, pos.y));
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2141,7 +2141,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 				if (this.player.build && !this.player.destroy){
 					this.updateHousepoint(pos.x,pos.y);
 				}else if (!this.player.build && this.player.destroy){
-					this.delteHousepoint(pos.x,pos.y);
+                    console.log("🧡pos: ", pos.x, pos.y, this.getEntityAt(pos.x,pos.y));
+					this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x,pos.y).id);
 				}
 			}
         },
@@ -2741,7 +2742,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         updatePlayerCheckpoint: function() {
             var checkpoint = this.map.getCurrentCheckpoint(this.player);
-	
+
             if(checkpoint) {
                 var lastCheckpoint = this.player.lastCheckpoint;
                 if(!lastCheckpoint || (lastCheckpoint && lastCheckpoint.id !== checkpoint.id)) {
@@ -2755,8 +2756,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 	    	this.client.sendBuild(x,y);
 		},
 
-		delteHousepoint: function(x,y) {
-	    	this.client.sendDestroy(x,y);
+		removeHousepoint: function(x, y, id) {
+	    	this.client.sendRemove(x, y, id);
 		},
 
         checkUndergroundAchievement: function() {

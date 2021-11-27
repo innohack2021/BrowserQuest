@@ -83,7 +83,7 @@ module.exports = World = cls.Class.extend({
             var move_callback = function(x, y) {
                 log.debug(player.name + " is moving to (" + x + ", " + y + ").");
                  var isPVP = self.map.isPVP(x, y);
-                player.flagPVP(isPVP); 
+                player.flagPVP(isPVP);
                player.forEachAttacker(function(mob) {
                      if(mob.target === null){
                         player.removeAttacker(mob);
@@ -284,7 +284,7 @@ module.exports = World = cls.Class.extend({
             log.error("pushToPlayer: player was undefined");
         }
     },
-    
+
     pushToGuild: function(guild, message, except) {
 		var	self = this;
 
@@ -375,6 +375,9 @@ module.exports = World = cls.Class.extend({
         if(entity.id in this.items) {
             delete this.items[entity.id];
         }
+        if(entity.id in this.npcs) {
+            delete this.items[entity.id];
+        }
 
         if(entity.type === "mob") {
             this.clearMobAggroLink(entity);
@@ -403,7 +406,7 @@ module.exports = World = cls.Class.extend({
 		}
 		return false;
 	},
-	
+
 	reloadGuild: function(guildId, guildName){
 			var res = false;
 			var lastItem = 0;
@@ -434,7 +437,7 @@ module.exports = World = cls.Class.extend({
 			}
 		return res;
 	},
-	
+
 	addGuild: function(guildName){
 		var res = true;
 		var id=0;//an ID here
@@ -442,7 +445,7 @@ module.exports = World = cls.Class.extend({
 			id = parseInt(key,10)+1;
 			return (guild.name !== guildName);
 		});
-		if (res) { 
+		if (res) {
 			this.guilds[id] = new Guild(id, guildName, this);
 			res = id;
 		}
@@ -489,6 +492,10 @@ module.exports = World = cls.Class.extend({
         this.addEntity(npc);
         this.npcs[npc.id] = npc;
         return npc;
+    },
+
+    removeNpc: function(entity) {
+        this.removeEntity(entity);
     },
 
     addItem: function(item) {

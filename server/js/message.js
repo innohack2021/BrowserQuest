@@ -152,14 +152,15 @@ Message.Build = Message.extend({
     }
 });
 
-Message.DESTROY = Message.extend({
+Message.Remove = Message.extend({
     init: function (entitiy) {
 	 this.entity = entity;
     },
     serialize: function() {
-	return [Types.Messages.DESTROY,
+	return [Types.Messages.REMOVE,
 		this.entity.x,
-		this.entity.y];
+		this.entity.y,
+        this.entity.id];
     }
 });
 

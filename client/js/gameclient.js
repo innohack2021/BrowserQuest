@@ -678,13 +678,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 		    			      x,
 	    				      y]);
 		},
-	
-		sendDestroy: function(x, y) {
-	    	this.sendMessage([Types.Messages.DESTROY,
+
+		sendRemove: function(x, y, id) {
+            console.log("🤢", x, y, id);
+	    	this.sendMessage([Types.Messages.REMOVE,
 		    			      x,
-	    		    		  y]);
+	    		    		  y,
+                              id]);
 		},
-	
+
         sendWho: function(ids) {
             ids.unshift(Types.Messages.WHO);
             this.sendMessage(ids);

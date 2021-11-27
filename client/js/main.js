@@ -265,7 +265,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     setTotalPlayersString("players");
                 }
             });
-            					
+
             game.onGuildPopulationChange( function(guildName, guildPopulation) {
 				var setGuildPlayersString = function(string) {
 					$("#guild-population").find("span:nth-child(2)").text(string);
@@ -368,7 +368,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             $(document).keyup(function(e) {
                 var key = e.which;
-                
+
                 if (game.started && !$('#chatbox').hasClass('active'))
                 {
                     switch(key) {
@@ -610,8 +610,8 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         hpg.css('display', 'block');
 
                         setInterval(function () {
-                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) && 
-                               (game.healShortCut >= 0) && 
+                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) &&
+                               (game.healShortCut >= 0) &&
                                Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
                                (game.player.inventoryCount[game.healShortCut] > 0)
                               ) {
