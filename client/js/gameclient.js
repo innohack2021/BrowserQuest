@@ -680,7 +680,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 		},
 
 		sendRemove: function(x, y, id) {
-            console.log("🤢", x, y, id);
 	    	this.sendMessage([Types.Messages.REMOVE,
 		    			      x,
 	    		    		  y,

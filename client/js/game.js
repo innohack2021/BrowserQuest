@@ -2499,11 +2499,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(chatPartner)
                 this.makeNpcTalk(chatPartner, message);
             if (message) {
-                if (message == "aaa") {
+                if (message == "a") {
                     this.buildMode = true;
 					this.player.build = false;
 					this.player.destroy = false;
-                } else if (message == "bbb") {
+                } else if (message == "b") {
                     this.buildMode = false;
 					this.player.build = false;
 					this.player.destroy = false;

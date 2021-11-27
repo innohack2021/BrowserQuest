@@ -310,7 +310,6 @@ module.exports = Player = Character.extend({
 				    y = message[2];
                 self.server.addNpc(40, x, y);
                 // self.server.addStaticItem(self.server.createItem(35, x, y));
-                self.server.map.setColliding(x, y);
 				databaseHandler.getHousepoint(self.name, x, y);
 	   		 }
 	   	 	else if (action == Types.Messages.REMOVE) {
@@ -319,9 +318,7 @@ module.exports = Player = Character.extend({
 			    	y = message[2],
 			    	id = message[3];
                 const entity = self.server.getEntityById(id);
-                console.log("💤", message);
                 console.log("💤", entity);
-                // self.server.removeNpc(self.server.getEntityAt(x, y));
                 self.server.despawn(entity);
 				databaseHandler.delHousepoint(self.name, x, y);
 		    }
