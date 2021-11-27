@@ -10,3 +10,5 @@ browserquest.conf
 *.sublime-project
 *.sublime-workspace
 node_modules/
+client/config/
+client/js/npc.js
