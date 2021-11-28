@@ -137,7 +137,8 @@ Messages.Teleport = Message.extend({
         return [Types.Messages.TELEPORT,
                 this.entity.id,
                 this.entity.x,
-                this.entity.y];
+                this.entity.y,
+				this.entity.containerId];
     }
 });
 
