@@ -10,7 +10,7 @@ RUN openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=
 RUN mv localhost.dev.crt etc/ssl/certs/
 RUN mv localhost.dev.key etc/ssl/private/
 RUN chmod 600 etc/ssl/certs/localhost.dev.crt etc/ssl/private/localhost.dev.key
-RUN
+
 COPY srcs/default.conf /etc/nginx/sites-available/default
 
 #phpmyadmin
