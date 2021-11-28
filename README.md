@@ -120,7 +120,14 @@ docker exec -it (컨테이너 이름) bash
 
 ### 개요
 
-다음과 같이 맵에 타일을 추가할 수 있습니다.
+다음과 같이 맵에 타일(스프라이트)을 추가할 수 있습니다.
+
+1. tools/maps/tmx/mobset.png(넣을 이미지를 15 x 15 pixel로 맞춰서 넣어준다) 수정합니다.
+2. Tile map editor(Tile)을 설치하고 map.tmx 실행
+    - map.tmx를 불러오고난 후 오른쪽 아래 Tilesets -> edit tileset로 실행시킨다.
+    - Custom Properties 에 Add Properties를 클릭한다
+    - type을 추가하고 추가한 스프라이트에 이름을 지어줍니다.
+    - png(tilesheet)와 tmx를 저장하고 export as로 json 파일로 저장해 줍니다.
 
 (gif)
 
@@ -128,18 +135,45 @@ docker exec -it (컨테이너 이름) bash
 
 **블럭 생성**
 
-- 대화창에 a를 입력하면, 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
-- 이 상태에서(...)
+1. 대화창에 build!를 입력하면 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
+2. 이 상태에서 오른쪽 밑에 망치모양 아이콘을 선택 하시면 설치할 수 있는 타일이 표시됩니다.
+  - 타일 종류: gun, gon, gam, lee, sand, rock, wood, soil, cave(입구)
+3. 좋아하는 타일을 선택하신 후 키 v를 눌러주시면 블럭을 생성할 수 있는 상태로 표시됩니다.
+4. 이후 원하는 위치에 선택하면 해당 위치에 블럭이 생성합니다.
+5. 대화창에 unbuild!를 입력하시면 빌드모드가 종료 되고 이동이 가능해집니다.
+
+**블럭 파괴**
+
+1. 대화창에 build!를 입력하면 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
+2. 키 b를 눌러주시면 블럭을 파괴할 수 있는 상태로 표시됩니다.
+3. 만든 블럭을 클릭해주시면 해당 위체 블럭을 파괴합니다.
+4. 대화창에 unbuild!를 입력하시면 빌드모드가 종료 되고 이동이 가능해집니다.
 
 ### 개발 방법
 
-- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
-- 무슨무슨 액션(데이터 서버에서 클라로 전달, 도커 실행 등등..)을 위해 무슨무슨 파일을 추가로 작성했습니다
+1. 스프라이트를 추가하는 방법은  ##개요에서 확인해 주세요.
+2. 코드 추가
+  - shared/js/gametype.js || client/shared/js/gametypes.js
+  ```javascript
+  Entities: {
+    ....,
+    BLOCKGUN: 70,
+    BLOCKGON: 71,
+    ...
+  }
 
-### 확장
-
-- 이러한 방식으로 올릴 타일을 변경할 수 있습니다.
-- 
+  var kinds = {
+    ...,
+    blockgun: [Types.Entities.BLOCKGUN, "npc"],
+    blockgon: [Types.Entities.BLOCKGON, "npc"],
+    ...
+  }
+  ```
+  수정해야할 코드
+  - client/js/entityfactory.js || client/js/game.js || client/js/npcs.js || client/js/sprite.js
+  - client/sprites에 만든 스프라이트 type 이름 기준으로 .josn 파일을 만들어 줍니다. (ex: blockgun.json)
+  - 
+## 확장
 
 ## 텔레포트 시 Docker Container로 웹사이트 실행
 
@@ -179,11 +213,18 @@ docker exec -it (컨테이너 이름) bash
 
 ### 개발 방법
 
-- Clova chatbot api 서버(https://github.com/SangheonYi/mentta_express.git)를 작성하여 ai chatbot과 대화 메시지를 주고 받을 수 있도록 했습니다.
+- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
+- 무슨무슨 액션을 위해 무슨무슨 파일을 추가로 작성했습니다
 
 ### 확장
 
-- http 통신을 사용하는 api라면 요청 메시지 작성, 응답 메시지 파싱 부분만 수정해서 다른 ai chatbot을 적용할 수 있습니다.
+- 이러한 방식으로 다른 챗봇을 적용할 수 있습니다.
+
+## Client와 Server 분리 실행
+
+### 개요
+
+### 확장
 
 ## To-do
 
