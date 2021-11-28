@@ -8,6 +8,7 @@ var cls = require("./lib/class"),
     Properties = require("./properties"),
     Formulas = require("./formulas"),
     check = require("./format").check,
+    redis = require("redis"),
     Types = require("../../shared/js/gametypes")
     bcrypt = require('bcrypt');
 const shell = require('shelljs');
@@ -43,6 +44,16 @@ module.exports = Player = Character.extend({
         this.isteleport = 0;//텔레포트했는 지 확인하는 변수
         var save_x,//텔레포트 좌표를 저장해두는 변수
             save_y;
+        //jawpark님 코드
+        this.tel_x = 0;
+        this.tel_y = 0;
+        var t_count = 0;
+        const client = redis.createClient({ 
+                host : "127.0.0.1", 
+                port : 6379,
+                db : 0,
+                password:"" 
+        });
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
@@ -278,12 +289,44 @@ module.exports = Player = Character.extend({
                     self.server.handlePlayerVanish(self);
                     self.server.pushRelevantEntityListTo(self);
 
-                    if (self.isteleport == 0)
+                    client.lrange('m:teleport', 0, -1, function(err, items){
+                        if (err) throw err;
+                        var i;
+                        var strarry;
+                        var count;
+                        
+                        // strarry[0] : 좌표값이 저장되어있음
+                        // strarry[1] : 좌표안에 들어간 사람 수가 들어있음
+                        if (t_count != 0)
+                        {
+                            x = save_x;
+                            y = save_y;
+                        }
+                        
+                        console.log("db search in x, y : "+x+","+y);
+                        for (i = 0; i < items.length; i++){
+                          strarry = items[i].split('num:');
+                          if (strarry[0] == ('x:' + x + 'y:' + y)){//처음 들어왔을 땐 좌표값이 저장안되있으니 넘어감
+                            count = parseInt(strarry[1]) + 1;//카운트 갱신하는 곳
+                            console.log("for inside count : " + count);
+                          }
+                        }
+                        if (count != undefined)
+                            t_count = count;
+                        console.log("db inside t_count : " + t_count);
+                    });
+
+                    setTimeout(function(){
+                    if (self.isteleport == 0 && t_count == 0)
                     {
 	                    log.info("TELEPORT INSIDE: " + self.name);
 	                    self.isteleport = 1;
                         save_x = message[1],//텔레포트 좌표 저장
                         save_y = message[2];
+                        //jawpark님 코드
+                        self.tel_x = x;
+						self.tel_y = y;
+						databaseHandler.getTeleportNumber(x, y);
                         //console.log('docker build . -t bq_image_' + save_x + '_' + save_y);
                         //console.log('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y)
 
@@ -300,11 +343,32 @@ module.exports = Player = Character.extend({
 		                    //shell.exit(1)
 	                    }
                     }
-                    else if (self.isteleport == 1)
+                    else if(self.isteleport == 0 && t_count != 0)
+                    {
+                        log.info("TELEPORT INSIDE: " + self.name);
+	                    self.isteleport = 1;
+                        save_x = message[1],//텔레포트 좌표 저장
+                        save_y = message[2];
+                        self.tel_x = x;
+						self.tel_y = y;
+						databaseHandler.getTeleportNumber(x, y);
+                    }
+                    else if (self.isteleport == 1 && t_count != 0)
+                    {
+                        log.info("TELEPORT OUTSIDE: " + self.name);
+	                    self.isteleport = 0;
+                        databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+						self.tel_x = 0;
+						self.tel_y = 0;
+                    }
+                    else if (self.isteleport == 1 && t_count == 0)
                     {
 	                    log.info("TELEPORT OUTSIDE: " + self.name);
 	                    self.isteleport = 0;
-
+                        //jawpark님 코드
+                        databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+						self.tel_x = 0;
+						self.tel_y = 0;
                         //console.log('docker stop ' + save_x + '_' + save_y);
                         //console.log('docker rm ' + save_x + '_' + save_y);
 	                    shell.cd('/mentta/bq_server')
@@ -314,11 +378,34 @@ module.exports = Player = Character.extend({
 		                    //shell.exit(1)
 	                    }
 
-                        if(shell.exec('./docker_end.sh').code !== 0) {
-		                    shell.echo('docker rm ' + save_x + '_' + save_y)
+                        if(shell.exec('docker rm ' + save_x + '_' + save_y).code !== 0) {
+		                    shell.echo('Error: command failed')
 		                    //shell.exit(1)
 	                    }
                     }
+                    }, 1000);
+                    
+                    /*
+                    if (self.isteleport == 0)
+                    {
+                        log.info("TELEPORT INSIDE: " + self.name);
+                        console.log("if insied t_count : " + t_count);
+                        console.log()
+                        self.tel_x = x;
+						self.tel_y = y;
+                        databaseHandler.getTeleportNumber(x, y);
+                        self.isteleport = 1;
+                    }
+                    else if (self.isteleport == 1)
+                    {
+                        log.info("TELEPORT OUTSIDE: " + self.name);
+                        console.log("else if inside t_count : " + t_count);
+                        databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+                        self.tel_x = 0;
+						self.tel_y = 0;
+                        self.isteleport = 0;
+                    }
+                    */
                 }
             }
             else if(action === Types.Messages.OPEN) {

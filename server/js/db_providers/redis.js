@@ -6,6 +6,8 @@ var cls = require("../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt");
 
+const shell = require('shelljs');
+
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
@@ -620,5 +622,58 @@ module.exports = DatabaseHandler = cls.Class.extend({
 	  }
 	});
        });
-     }
+     },
+
+    getTeleportNumber: function(x, y){
+      client.lrange('m:teleport', 0, -1, function(err, items){
+        if (err) throw err;
+        var i;
+        var count = 0;
+        var strarry;
+        for (i = 0; i < items.length; i++){
+          strarry = items[i].split('num:');
+          if (strarry[0] == ('x:' + x + 'y:' + y)){
+            count = parseInt(strarry[1]) + 1;
+          }
+        }
+        if (count == 0) {
+          client.lpush('m:teleport', 'x:' + x + 'y:' + y + 'num:1');
+          log.info('Get Teleport Num: ' + '(' + x + ',' + y + ')');
+        }
+        else {
+          client.lrem('m:teleport', 1, ('x:' + x + 'y:' + y + 'num:' + (count - 1)));
+          client.lpush('m:teleport', 'x:' + x + 'y:' + y + 'num:' + count);
+          log.info('Get Teleport Nums: ' + '(' + x + ',' + y + ')');
+        }
+      });
+    },
+    outTeleportNumber: function(x, y) {
+      client.lrange('m:teleport', 0, -1, function(err, items){
+        if (err) throw err;
+        var i;
+        var count = 0;
+        var strarry;
+        for (i = 0; i <items.length; i++) {
+          strarry = items[i].split('num:');
+          if (strarry[0] == ('x:' + x + 'y:' + y)){
+            count = parseInt(strarry[1]);
+          }
+        }
+        if (count > 1){
+          client.lrem('m:teleport', 1, ('x:' + x + 'y:' + y + 'num:' + count));
+          client.lpush('m:teleport', 'x:' + x + 'y:' + y + 'num:' + (count - 1));
+          log.info('Out Teleport Nums: ' + '(' + x + ',' + y + ')');
+        }
+        else if (count < 2){
+          if ((count - 1) == 0){
+            client.lrem('m:teleport', 1, ('x:' + x + 'y:' + y + 'num:' + count));
+            log.info('Del Teleport Num: ' + '(' + x + ',' + y + ')');
+          }
+          else {
+            log.info('Dont keys error');
+            return ;
+          }
+        }
+      });
+    }
 });
