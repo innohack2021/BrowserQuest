@@ -645,7 +645,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 console.log("🆔 lee: ", game.buildKind);
             });
             $('#buildmap_block_1').click(function(e) {
-                game.buildKind = 74;
+                game.buildKind = 79;
                 console.log("🆔 block1: ", game.buildKind);
             });
             $('#buildmap_block_2').click(function(e) {
@@ -657,11 +657,11 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 console.log("🆔 block3: ", game.buildKind);
             });
             $('#buildmap_block_4').click(function(e) {
-                game.buildKind = 77;
+                game.buildKind = 78;
                 console.log("🆔 block4: ", game.buildKind);
             });
             $('#buildmap_block_5').click(function(e) {
-                game.buildKind = 78;
+                game.buildKind = 77;
                 console.log("🆔 block5: ", game.buildKind);
             });
             $('#buildmap_type_hospital').click(function(e) {
