@@ -331,8 +331,11 @@ module.exports = Player = Character.extend({
           });
 
           setTimeout(function () {
+            log.info(
+              "🧦 isteleport: " + self.isteleport + " t_count: " + t_count
+            );
             if (self.isteleport == 0 && t_count == 0) {
-              log.info("TELEPORT INSIDE: " + self.name);
+              log.info("TELEPORT 0 && 0 INSIDE: " + self.name);
               self.isteleport = 1;
               (save_x = message[1]), (save_y = message[2]);
               select_image = message[3];
@@ -373,7 +376,7 @@ module.exports = Player = Character.extend({
                 }
               }
             } else if (self.isteleport == 0 && t_count != 0) {
-              log.info("TELEPORT INSIDE: " + self.name);
+              log.info("TELEPORT 0 && !0 INSIDE: " + self.name);
               self.isteleport = 1;
               (save_x = message[1]), (save_y = message[2]);
               self.tel_x = x;

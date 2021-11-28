@@ -85,10 +85,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                 "item-platearmor", "item-redarmor", "item-goldenarmor", "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar", "item-firepotion"];
 
             // custom var by sayi
-            this.buildMode = false;
+            this.buildMode = true;
             this.blockNpc = [ 70, 71, 72, 73, 76, 77, 78, 79];
             this.teleportNpc = [74, 75];
-            this.buildKind = 70; // change by buttons
+            this.buildKind = 75; // change by buttons
             this.containerId = 1;
             this.customTeleport = false;
             this.customDest = {
@@ -2163,7 +2163,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             } else {
                 this.previousClickPosition = pos;
             }
-			if (!this.buildMode){
+			if (this.buildMode){
 	            this.processInput(pos);
 			}else{
 				if (this.player.build && !this.player.destroy) {
