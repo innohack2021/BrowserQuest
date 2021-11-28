@@ -83,8 +83,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                 "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
                                 "item-platearmor", "item-redarmor", "item-goldenarmor", "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar", "item-firepotion"];
 
-            // mode
+            // custom var by sayi
             this.buildMode = false;
+            this.blockNpc = 40;
+            this.customTeleport = false;
+            this.customDest = {
+                cameraX: undefined,
+                cameraY: undefined,
+                portal: false,
+                x: undefined,
+                y: undefined
+            };
         },
 
         setup: function($bubbleContainer, canvas, background, foreground, input) {
@@ -966,9 +975,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.tryLootingItem(item);
                     }
 
-                    if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
+                    if((!self.player.hasTarget() && self.map.isDoor(x, y))) {
                         var dest = self.map.getDoorDestination(x, y);
-
+                        if (self.customTeleport) {
+                            dest = self.customDest;
+                            self.customTeleport = false;
+                        }
+                        console.log("🤢 dest: ",dest);
+                        console.log(self.player);
                         self.player.setGridPosition(dest.x, dest.y);
                         self.player.nextGridX = dest.x;
                         self.player.nextGridY = dest.y;
@@ -2128,7 +2142,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-            console.log("💙", this.map.isColliding(pos.x, pos.y));
+            console.log("clicked pos: ",pos);
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2141,7 +2155,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 				if (this.player.build && !this.player.destroy){
 					this.updateHousepoint(pos.x,pos.y);
 				}else if (!this.player.build && this.player.destroy){
-                    console.log("🧡pos: ", pos.x, pos.y, this.getEntityAt(pos.x,pos.y));
 					this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x,pos.y).id);
 				}
 			}
@@ -2175,12 +2188,53 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            this.makeNpcTalk(entity, null);
+                            if (entity.kind !== this.blockNpc)
+                                this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
-                                this.player.disableKeyboardNpcTalk = true;
-                                this.player.npcChatPartner = entity;
+                                if (entity.kind === this.blockNpc) {
+                                    var dest = {
+                                        x: 126,
+                                        y: 143,
+                                        orientation: 1,
+                                        cameraX: 119,
+                                        cameraY: 138,
+                                        portal: false
+                                    };
+                                    this.customTeleport = true;
+                                    this.customDest.x = this.player.nextGridX;
+                                    this.customDest.y = this.player.nextGridY;
+                                    console.log("💟 return dest: ", this.customDest);
+                                    this.player.setGridPosition(dest.x, dest.y);
+                                    this.player.nextGridX = dest.x;
+                                    this.player.nextGridY = dest.y;
+                                    this.player.turnTo(dest.orientation);
+                                    this.client.sendTeleport(dest.x, dest.y);
+
+                                    if(this.renderer.mobile && dest.cameraX && dest.cameraY) {
+                                        this.camera.setGridPosition(dest.cameraX, dest.cameraY);
+                                        this.resetZone();
+                                    } else {
+                                        this.camera.focusEntity(this.player);
+                                        this.resetZone();
+                                    }
+
+                                    this.updatePlateauMode();
+
+                                    if(this.renderer.mobile || this.renderer.tablet) {
+                                        // When rendering with dirty rects, clear the whole screen when entering a door.
+                                        this.renderer.clearScreen(this.renderer.context);
+                                    }
+
+                                    if(!this.player.isDead) {
+                                        this.audioManager.updateMusic();
+                                    }
+                                }
+                                else {
+                                    this.player.disableKeyboardNpcTalk = true;
+                                    this.player.npcChatPartner = entity;
+                                }
                             }
 
                         }
