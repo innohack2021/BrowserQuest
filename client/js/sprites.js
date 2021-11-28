@@ -69,12 +69,17 @@ define(['text!../sprites/agent.json',
         'text!../sprites/villagegirl.json',
         'text!../sprites/villager.json',
         'text!../sprites/wizard.json',
-        'text!../sprites/house.json',
-        'text!../sprites/house2.json',
-        'text!../sprites/house3.json',	
-        'text!../sprites/woodtile.json',
-        'text!../sprites/wooddoor.json'], function() {
-
+        'text!../sprites/blockgun.json',
+        'text!../sprites/blockgon.json',
+        'text!../sprites/blockgam.json',
+        'text!../sprites/blocklee.json',
+        'text!../sprites/blockdoor.json',
+        'text!../sprites/blockcave.json',
+        'text!../sprites/blocksoil.json',
+        'text!../sprites/blockrock.json',
+        'text!../sprites/blockwood.json',
+        'text!../sprites/blocksand.json'], function() {
+            
     var sprites = {};
 
     _.each(arguments, function(spriteJson) {
