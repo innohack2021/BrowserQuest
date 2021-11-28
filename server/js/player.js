@@ -307,11 +307,12 @@ module.exports = Player = Character.extend({
                 }
             }
 	    	else if (action == Types.Messages.BUILD) {
-				log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ")");
+				log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ', ' + message[3] + ")");
 				var x = message[1],
-				    y = message[2];
+				    y = message[2],
+					kind = message[3];
 
-					self.server.addNpc(67, x, y);
+					self.server.addNpc(kind, x, y);
 					databaseHandler.getHousepoint(self.name, x, y);
 	   		 }
 	   	 	else if (action == Types.Messages.REMOVE) {
