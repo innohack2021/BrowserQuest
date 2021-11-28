@@ -395,6 +395,7 @@ module.exports = Player = Character.extend({
               self.tel_x = 0;
               self.tel_y = 0;
 
+              log.info(`🎶 docker stop ${save_x}_${save_y}`);
               //need modify
               if (shell.exec(`docker stop ${save_x}_${save_y}`).code !== 0) {
                 shell.echo("Error: command failed");
