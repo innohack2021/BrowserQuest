@@ -2141,7 +2141,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-			var kind = 67;
+			var kind = 79;
 
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
