@@ -989,7 +989,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.player.nextGridX = dest.x;
                         self.player.nextGridY = dest.y;
                         self.player.turnTo(dest.orientation);
-                        self.client.sendTeleport(dest.x, dest.y);
+                        self.client.sendTeleport(dest.x, dest.y, -1);
 
                         if(self.renderer.mobile && dest.cameraX && dest.cameraY) {
                             self.camera.setGridPosition(dest.cameraX, dest.cameraY);
@@ -2214,7 +2214,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     this.player.nextGridX = dest.x;
                                     this.player.nextGridY = dest.y;
                                     this.player.turnTo(dest.orientation);
-                                    this.client.sendTeleport(dest.x, dest.y);
+                                    this.client.sendTeleport(dest.x, dest.y, -1);
 
                                     if(this.renderer.mobile && dest.cameraX && dest.cameraY) {
                                         this.camera.setGridPosition(dest.cameraX, dest.cameraY);

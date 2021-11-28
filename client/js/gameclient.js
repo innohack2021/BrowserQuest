@@ -653,10 +653,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                               item.id]);
         },
 
-        sendTeleport: function(x, y) {
+        sendTeleport: function(x, y, containerId) {
             this.sendMessage([Types.Messages.TELEPORT,
                               x,
-                              y]);
+                              y,
+							  containerId]);
         },
 
         sendZone: function() {
