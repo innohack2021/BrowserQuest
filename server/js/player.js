@@ -359,7 +359,7 @@ module.exports = Player = Character.extend({
                 imageTag;
               const dockerStart = "docker start " + containerName;
               log.info("🎶 run: " + dockerRun);
-              log.info("🎶 start: " + dockerstart);
+              log.info("🎶 start: " + dockerStart);
               //jawpark code
               self.tel_x = x;
               self.tel_y = y;
