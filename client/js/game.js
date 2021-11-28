@@ -85,7 +85,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // custom var by sayi
             this.buildMode = false;
-            this.blockNpc = 40;
+            this.blockNpc = [67, 68];
+            this.teleportNpc = 67;
+            this.buildKind = 67; // change by buttons
             this.customTeleport = false;
             this.customDest = {
                 cameraX: undefined,
@@ -2186,12 +2188,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            if (entity.kind !== this.blockNpc)
+                            console.log("🧡", this.blockNpc);
+                            console.log(this.blockNpc.includes(entity.kind));
+                            if (this.blockNpc.includes(entity.kind) && entity.kind !== this.teleportNpc)
                                 this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
-                                if (entity.kind === this.blockNpc) {
+                                if (entity.kind === this.teleportNpc) {
                                     var dest = {
                                         x: 126,
                                         y: 143,
