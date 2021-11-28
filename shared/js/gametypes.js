@@ -32,8 +32,8 @@ Types = {
         PVP: 28,
         GUILD: 29,
         GUILDERROR: 30,
-	BUILD: 31,
-	DESTROY: 32,
+		BUILD: 31,
+		REMOVE: 32,
         GUILDERRORTYPE: {
         	DOESNOTEXIST: 1,
         	BADNAME: 2,
@@ -107,6 +107,11 @@ Types = {
         DESERTNPC: 53,
         LAVANPC: 54,
         CODER: 55,
+		HOUSE: 56,
+		HOUSE2: 57,
+		HOUSE3: 58,
+		WOODTILE: 67,
+		WOODDOOR: 68,
 
         // Weapons
         SWORD1: 60,
@@ -204,6 +209,11 @@ var kinds = {
     forestnpc: [Types.Entities.FORESTNPC, "npc"],
     desertnpc: [Types.Entities.DESERTNPC, "npc"],
     lavanpc: [Types.Entities.LAVANPC, "npc"],
+	house: [Types.Entities.HOUSE, "npc"],
+	house2: [Types.Entities.HOUSE2, "npc"],
+	house3: [Types.Entities.HOUSE3, "npc"],
+	woodtile: [Types.Entities.WOODTILE, "npc"],
+	wooddoor: [Types.Entities.WOODDOOR, "npc"],
 
     getType: function(kind) {
         return kinds[Types.getKindAsString(kind)][1];
@@ -410,11 +420,7 @@ Types.forEachWeaponKind = function(callback) {
 
 Types.getOrientationAsString = function(orientation) {
     switch(orientation) {
-        case Types.Orientations.LEFT: return "left"; break;
-        case Types.Orientations.RIGHT: return "right"; break;
-        case Types.Orientations.UP: return "up"; break;
-        case Types.Orientations.DOWN: return "down"; break;
-    }
+        case Types.Orientations.LEFT: return "left";        case Types.Orientations.RIGHT: return "right";        case Types.Orientations.UP: return "up";        case Types.Orientations.DOWN: return "down";    }
 };
 
 Types.getRandomItemKind = function(item) {

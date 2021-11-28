@@ -28,8 +28,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.moveDown = false;
             this.player.moveLeft = false;
             this.player.moveRight = false;
-	    this.player.build = false;
-	    this.player.destroy = false;
+	    	this.player.build = false;
+	    	this.player.destroy = false;
             this.player.disableKeyboardNpcTalk = false;
 
             // Game state
@@ -77,14 +77,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // sprites
             this.spriteNames = ["hand", "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton", "skeleton2", "spectre", "boss", "deathknight",
-                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest",
+                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", "house", "house2", "house3", "woodtile", "wooddoor",
                                 "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc", "clotharmor", "leatherarmor", "mailarmor",
                                 "platearmor", "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
                                 "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
                                 "item-platearmor", "item-redarmor", "item-goldenarmor", "item-flask", "item-cake", "item-burger", "morningstar", "item-morningstar", "item-firepotion"];
 
-            // mode
+            // custom var by sayi
             this.buildMode = false;
+            this.blockNpc = 40;
+            this.customTeleport = false;
+            this.customDest = {
+                cameraX: undefined,
+                cameraY: undefined,
+                portal: false,
+                x: undefined,
+                y: undefined
+            };
         },
 
         setup: function($bubbleContainer, canvas, background, foreground, input) {
@@ -395,6 +404,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.hoveringCollidingTile && this.started) {
                 this.targetColor = "rgba(255, 50, 50, 0.5)";
             }
+			else if (this.buildMode && this.player.build && !this.player.destroy)
+				this.targetColor = "rgba(0, 0, 145, 0.5)";
+			else if (this.buildMode && !this.player.build && this.player.destroy)
+				this.targetColor = "rgba(110, 25, 128, 0.5)";
             else {
                 this.targetColor = "rgba(255, 255, 255, 0.5)";
             }
@@ -962,9 +975,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.tryLootingItem(item);
                     }
 
-                    if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
+                    if((!self.player.hasTarget() && self.map.isDoor(x, y))) {
                         var dest = self.map.getDoorDestination(x, y);
-
+                        if (self.customTeleport) {
+                            dest = self.customDest;
+                            self.customTeleport = false;
+                        }
                         self.player.setGridPosition(dest.x, dest.y);
                         self.player.nextGridX = dest.x;
                         self.player.nextGridY = dest.y;
@@ -2124,15 +2140,22 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
             } else {
                 this.previousClickPosition = pos;
             }
-
-            this.processInput(pos);
+			if (!this.buildMode){
+	            this.processInput(pos);
+			}else{
+				if (this.player.build && !this.player.destroy) {
+					this.updateHousepoint(pos.x, pos.y);
+				}else if (!this.player.build && this.player.destroy) {
+					if (this.getEntityAt(pos.x, pos.y))
+						this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x, pos.y).id);
+				}
+			}
         },
 
         /**
@@ -2148,7 +2171,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             && !this.player.isDead
             && !this.hoveringCollidingTile
             && !this.hoveringPlateauTile
-            && !this.buildMode) {
+			&& !this.buildMode) {
                 entity = this.getEntityAt(pos.x, pos.y);
 
         	    if(entity instanceof Mob || (entity instanceof Player && entity !== this.player && this.player.pvpFlag && this.pvpFlag)) {
@@ -2163,12 +2186,52 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            this.makeNpcTalk(entity, null);
+                            if (entity.kind !== this.blockNpc)
+                                this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
-                                this.player.disableKeyboardNpcTalk = true;
-                                this.player.npcChatPartner = entity;
+                                if (entity.kind === this.blockNpc) {
+                                    var dest = {
+                                        x: 126,
+                                        y: 143,
+                                        orientation: 1,
+                                        cameraX: 119,
+                                        cameraY: 138,
+                                        portal: false
+                                    };
+                                    this.customTeleport = true;
+                                    this.customDest.x = this.player.nextGridX;
+                                    this.customDest.y = this.player.nextGridY;
+                                    this.player.setGridPosition(dest.x, dest.y);
+                                    this.player.nextGridX = dest.x;
+                                    this.player.nextGridY = dest.y;
+                                    this.player.turnTo(dest.orientation);
+                                    this.client.sendTeleport(dest.x, dest.y);
+
+                                    if(this.renderer.mobile && dest.cameraX && dest.cameraY) {
+                                        this.camera.setGridPosition(dest.cameraX, dest.cameraY);
+                                        this.resetZone();
+                                    } else {
+                                        this.camera.focusEntity(this.player);
+                                        this.resetZone();
+                                    }
+
+                                    this.updatePlateauMode();
+
+                                    if(this.renderer.mobile || this.renderer.tablet) {
+                                        // When rendering with dirty rects, clear the whole screen when entering a door.
+                                        this.renderer.clearScreen(this.renderer.context);
+                                    }
+
+                                    if(!this.player.isDead) {
+                                        this.audioManager.updateMusic();
+                                    }
+                                }
+                                else {
+                                    this.player.disableKeyboardNpcTalk = true;
+                                    this.player.npcChatPartner = entity;
+                                }
                             }
 
                         }
@@ -2487,10 +2550,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(chatPartner)
                 this.makeNpcTalk(chatPartner, message);
             if (message) {
-                if (message == "aaa") {
+                if (message == "a") {
                     this.buildMode = true;
-                } else if (message == "bbb") {
+					this.player.build = false;
+					this.player.destroy = false;
+                } else if (message == "b") {
                     this.buildMode = false;
+					this.player.build = false;
+					this.player.destroy = false;
                 }
             }
         },
@@ -2726,7 +2793,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         updatePlayerCheckpoint: function() {
             var checkpoint = this.map.getCurrentCheckpoint(this.player);
-	
+
             if(checkpoint) {
                 var lastCheckpoint = this.player.lastCheckpoint;
                 if(!lastCheckpoint || (lastCheckpoint && lastCheckpoint.id !== checkpoint.id)) {
@@ -2736,13 +2803,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
 
-	updateHousepoint: function(x, y) {
-	    this.client.sendBuild(x,y);
-	},
+		updateHousepoint: function(x, y) {
+	    	this.client.sendBuild(x, y);
+		},
 
-	delteHousepoint: function(x,y) {
-	    this.client.sendDestroy(x,y);
-	},
+		removeHousepoint: function(x, y, id) {
+	    	this.client.sendRemove(x, y, id);
+		},
 
         checkUndergroundAchievement: function() {
             var music = this.audioManager.getSurroundingMusic(this.player);

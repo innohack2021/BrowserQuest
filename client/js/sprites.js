@@ -68,7 +68,12 @@ define(['text!../sprites/agent.json',
         'text!../sprites/target.json',
         'text!../sprites/villagegirl.json',
         'text!../sprites/villager.json',
-        'text!../sprites/wizard.json'], function() {
+        'text!../sprites/wizard.json',
+        'text!../sprites/house.json',
+        'text!../sprites/house2.json',
+        'text!../sprites/house3.json',	
+        'text!../sprites/woodtile.json',
+        'text!../sprites/wooddoor.json'], function() {
 
     var sprites = {};
 

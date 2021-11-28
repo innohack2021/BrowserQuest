@@ -99,6 +99,36 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.OCTOCAT, 1);
             }
+        }),
+
+        House: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.HOUSE, 1);
+            }
+        }),
+
+        House2: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.HOUSE2, 1);
+            }
+        }),
+
+        House3: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.HOUSE3, 1);
+            }
+        }),
+
+        Woodtile: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.WOODTILE, 1);
+            }
+        }),
+
+        Wooddoor: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.WOODDOOR, 1);
+            }
         })
     };
 

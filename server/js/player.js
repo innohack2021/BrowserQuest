@@ -39,7 +39,9 @@ module.exports = Player = Character.extend({
         this.achievement = [];
 
         this.chatBanEndTime = 0;
-        this.isteleport = 0;
+		this.isteleport = 0;
+		this.tel_x = 0;
+		this.tel_y = 0;
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
@@ -276,13 +278,16 @@ module.exports = Player = Character.extend({
 
                     self.server.handlePlayerVanish(self);
                     self.server.pushRelevantEntityListTo(self);
-					//jawpark
-					if (self.isteleport == 0)
-					{
+					if (self.isteleport == 0) {
 						self.isteleport = 1;
-					}
-					else if (self.isteleport == 1)
-					{
+						self.tel_x = x;
+						self.tel_y = y;
+						databaseHandler.getTeleportNumber(x, y);
+					} else if (self.isteleport == 1) {
+						self.isteleport = 0;
+						databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+						self.tel_x = 0;
+						self.tel_y = 0;
 					}
                 }
             }
@@ -301,19 +306,24 @@ module.exports = Player = Character.extend({
                     databaseHandler.setCheckpoint(self.name, self.x, self.y);
                 }
             }
-	    else if (action == Types.Messages.BUILD) {
-		log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ")");
-		var x = message[1],
-		    y = message[2];
-		databaseHandler.getHousepoint(self.name, x, y);
-	    }
-	    else if (action == Types.Messages.DESTROY) {
-		log.info("DESTROY: " + self.name + " (" + message[1] + ", " + message[2] + ")");
-		var x = message[1],
-		    y = message[2];
-		databaseHandler.delHousepoint(self.name, x, y);
+	    	else if (action == Types.Messages.BUILD) {
+				log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ")");
+				var x = message[1],
+				    y = message[2];
 
-	    }
+					self.server.addNpc(67, x, y);
+					databaseHandler.getHousepoint(self.name, x, y);
+	   		 }
+	   	 	else if (action == Types.Messages.REMOVE) {
+				log.info("REMOVE: " + self.name + " (" + message[1] + ", " + message[2] + ", " + message[3] + ")");
+				var x = message[1],
+			    	y = message[2],
+			    	id = message[3];
+
+                	const entity = self.server.getEntityById(id);
+                	self.server.despawn(entity);
+					databaseHandler.delHousepoint(self.name, x, y);
+		    }
             else if(action === Types.Messages.INVENTORY){
                 log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);
                 var inventoryNumber = message[2],

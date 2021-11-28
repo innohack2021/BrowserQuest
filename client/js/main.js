@@ -265,7 +265,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     setTotalPlayersString("players");
                 }
             });
-            					
+
             game.onGuildPopulationChange( function(guildName, guildPopulation) {
 				var setGuildPlayersString = function(string) {
 					$("#guild-population").find("span:nth-child(2)").text(string);
@@ -368,7 +368,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
             $(document).keyup(function(e) {
                 var key = e.which;
-                
+
                 if (game.started && !$('#chatbox').hasClass('active'))
                 {
                     switch(key) {
@@ -396,12 +396,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                             game.player.moveDown = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
-			case Types.Keys.V:
-			    game.player.build = false;
-			    break;
-		        case Types.Keys.B:
-			    game.player.destroy = false;
-			    break;
+						//case Types.Keys.V:
+			    		//	game.player.build = false;
+			    		//	break;
+		        		//case Types.Keys.B:
+			    		//	game.player.destroy = false;
+			    		//	break;
                         default:
                             break;
                     }
@@ -462,12 +462,30 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         case Types.Keys.P:
                             $('#playercount').click();
                             break;
-			case Types.Keys.V:
-			    game.player.build = true;
-			    break;
-			case Types.Keys.B:
-			    game.player.destroy = true;
-			    break;
+						case Types.Keys.V:
+							if (game.player.build === false) {
+			    				game.player.build = true;
+								if (game.player.destroy === true)
+									game.player.destroy = false;
+							}else {
+								game.player.build = false;
+								if (game.player.destroy === true)
+									game.player.destroy = false;
+							}
+			    			break;
+						case Types.Keys.B:
+							if (game.player.destroy === false) {
+				    			game.player.destroy = true;
+								if (game.player.build === true) {
+									game.player.build = false;
+								}
+							}else {
+								game.player.destroy = false;
+								if (game.player.build === true) {
+									game.player.build = false;
+								}
+							}
+			    			break;
                         default:
                             break;
                     }
@@ -594,8 +612,8 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         hpg.css('display', 'block');
 
                         setInterval(function () {
-                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) && 
-                               (game.healShortCut >= 0) && 
+                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) &&
+                               (game.healShortCut >= 0) &&
                                Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
                                (game.player.inventoryCount[game.healShortCut] > 0)
                               ) {

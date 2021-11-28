@@ -80,9 +80,9 @@ var Map = cls.Class.extend({
 
     generateCollisionGrid: function () {
         this.grid = [];
-
         if (this.isLoaded) {
             var tileIndex = 0;
+
             for (var j, i = 0; i < this.height; i++) {
                 this.grid[i] = [];
                 for (j = 0; j < this.width; j++) {
@@ -107,6 +107,12 @@ var Map = cls.Class.extend({
             return false;
         }
         return this.grid[y][x] === 1;
+    },
+    setColliding: function (x, y) {
+        if (this.isOutOfBounds(x, y)) {
+            return false;
+        }
+        this.grid[y][x] = 1;
     },
     isPVP: function(x,y){
         var area = null;
