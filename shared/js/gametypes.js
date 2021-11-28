@@ -32,8 +32,8 @@ Types = {
         PVP: 28,
         GUILD: 29,
         GUILDERROR: 30,
-	BUILD: 31,
-	REMOVE: 32,
+		BUILD: 31,
+		REMOVE: 32,
         GUILDERRORTYPE: {
         	DOESNOTEXIST: 1,
         	BADNAME: 2,
@@ -107,6 +107,9 @@ Types = {
         DESERTNPC: 53,
         LAVANPC: 54,
         CODER: 55,
+		HOUSE: 56,
+		HOUSE2: 57,
+		HOUSE3: 58,
 
         // Weapons
         SWORD1: 60,
@@ -204,6 +207,10 @@ var kinds = {
     forestnpc: [Types.Entities.FORESTNPC, "npc"],
     desertnpc: [Types.Entities.DESERTNPC, "npc"],
     lavanpc: [Types.Entities.LAVANPC, "npc"],
+	house: [Types.Entities.HOUSE, "npc"],
+	house2: [Types.Entities.HOUSE2, "npc"],
+	house3: [Types.Entities.HOUSE3, "npc"],
+
 
     getType: function(kind) {
         return kinds[Types.getKindAsString(kind)][1];

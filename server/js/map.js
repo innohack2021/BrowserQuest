@@ -113,7 +113,6 @@ var Map = cls.Class.extend({
             return false;
         }
         this.grid[y][x] = 1;
-        console.log("💔 setcoliding: ", this.grid[y][x], x, y);
     },
     isPVP: function(x,y){
         var area = null;

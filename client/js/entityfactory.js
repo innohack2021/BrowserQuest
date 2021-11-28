@@ -208,5 +208,17 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
         return new NPCs.LavaNpc(id);
     };
 
+    EntityFactory.builders[Types.Entities.HOUSE] = function(id) {
+        return new NPCs.House(id);
+    };
+
+    EntityFactory.builders[Types.Entities.HOUSE2] = function(id) {
+        return new NPCs.House2(id);
+    };
+
+    EntityFactory.builders[Types.Entities.HOUSE3] = function(id) {
+        return new NPCs.House3(id);
+    };
+
     return EntityFactory;
 });

@@ -308,19 +308,19 @@ module.exports = Player = Character.extend({
 				log.info("BUILD: " + self.name + " (" + message[1] + ", " + message[2] + ")");
 				var x = message[1],
 				    y = message[2];
-                self.server.addNpc(40, x, y);
-                // self.server.addStaticItem(self.server.createItem(35, x, y));
-				databaseHandler.getHousepoint(self.name, x, y);
+
+					self.server.addNpc(57, x, y);
+					databaseHandler.getHousepoint(self.name, x, y);
 	   		 }
 	   	 	else if (action == Types.Messages.REMOVE) {
 				log.info("REMOVE: " + self.name + " (" + message[1] + ", " + message[2] + ", " + message[3] + ")");
 				var x = message[1],
 			    	y = message[2],
 			    	id = message[3];
-                const entity = self.server.getEntityById(id);
-                console.log("💤", entity);
-                self.server.despawn(entity);
-				databaseHandler.delHousepoint(self.name, x, y);
+				
+                	const entity = self.server.getEntityById(id);
+                	self.server.despawn(entity);
+					databaseHandler.delHousepoint(self.name, x, y);
 		    }
             else if(action === Types.Messages.INVENTORY){
                 log.info("INVENTORY: " + self.name + " " + message[1] + " " + message[2] + " " + message[3]);

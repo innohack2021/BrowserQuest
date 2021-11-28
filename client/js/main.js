@@ -463,25 +463,27 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                             $('#playercount').click();
                             break;
 						case Types.Keys.V:
-							if (game.player.build == false) {
+							if (game.player.build === false) {
 			    				game.player.build = true;
-								if (game.player.destroy == true)
+								if (game.player.destroy === true)
 									game.player.destroy = false;
 							}else {
 								game.player.build = false;
-								if (game.player.destroy == true)
+								if (game.player.destroy === true)
 									game.player.destroy = false;
 							}
 			    			break;
 						case Types.Keys.B:
-							if (game.player.destroy == false) {
+							if (game.player.destroy === false) {
 				    			game.player.destroy = true;
-								if (game.player.build == true)
+								if (game.player.build === true) {
 									game.player.build = false;
+								}
 							}else {
 								game.player.destroy = false;
-								if (game.player.build == true)
-									game.player.build - false;
+								if (game.player.build === true) {
+									game.player.build = false;
+								}
 							}
 			    			break;
                         default:
