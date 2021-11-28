@@ -673,10 +673,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                               id]);
         },
 
-		sendBuild: function(x, y) {
+		sendBuild: function(x, y, kind) {
 	    	this.sendMessage([Types.Messages.BUILD,
 		    			      x,
-	    				      y]);
+	    				      y,
+							  kind]);
 		},
 
 		sendRemove: function(x, y, id) {

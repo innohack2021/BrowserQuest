@@ -120,7 +120,20 @@ Types = {
         GOLDENSWORD: 63,
         MORNINGSTAR: 64,
         AXE: 65,
-        BLUESWORD: 66
+        BLUESWORD: 66,
+
+        //block
+        BLOCKGUN: 70,
+        BLOCKGON: 71,
+        BLOCKGAM: 72,
+        BLOCKLEE: 73,
+        BLOCKDOOR: 74,
+        BLOCKCAVE: 75,
+        BLOCKSOIL: 76,
+        BLOCKROCK: 77,
+        BLOCKWOOD: 78,
+        BLOCKSAND: 79
+
     },
 
     Orientations: {
@@ -209,11 +222,16 @@ var kinds = {
     forestnpc: [Types.Entities.FORESTNPC, "npc"],
     desertnpc: [Types.Entities.DESERTNPC, "npc"],
     lavanpc: [Types.Entities.LAVANPC, "npc"],
-    house: [Types.Entities.HOUSE, "npc"],
-    house2: [Types.Entities.HOUSE2, "npc"],
-    house3: [Types.Entities.HOUSE3, "npc"],
-	woodtile: [Types.Entities.WOODTILE, "npc"],
-	wooddoor: [Types.Entities.WOODDOOR, "npc"],
+    blockgun: [Types.Entities.BLOCKGUN, "npc"],
+    blockgon: [Types.Entities.BLOCKGON, "npc"],
+    blockgam: [Types.Entities.BLOCKGAM, "npc"],
+    blocklee: [Types.Entities.BLOCKLEE, "npc"],
+    blockdoor: [Types.Entities.BLOCKDOOR, "npc"],
+    blockcave: [Types.Entities.BLOCKCAVE, "npc"],
+    blocksoil: [Types.Entities.BLOCKSOIL, "npc"],
+    blockrock: [Types.Entities.BLOCKROCK, "npc"],
+    blockwood: [Types.Entities.BLOCKWOOD, "npc"],
+    blocksand: [Types.Entities.BLOCKSAND, "npc"],
 
     getType: function(kind) {
         return kinds[Types.getKindAsString(kind)][1];

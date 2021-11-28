@@ -77,7 +77,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // sprites
             this.spriteNames = ["hand", "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton", "skeleton2", "spectre", "boss", "deathknight",
-                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", "house", "house2", "house3", "woodtile", "wooddoor",
+                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest",
+                                "blockgun", "blockgon", "blockgam", "blocklee", "blockdoor", "blockcave", "blocksoil", "blockrock", "blockwood", "blocksand",
                                 "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc", "clotharmor", "leatherarmor", "mailarmor",
                                 "platearmor", "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
                                 "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
@@ -85,7 +86,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // custom var by sayi
             this.buildMode = false;
-            this.blockNpc = 40;
+            this.blockNpc = [67, 68];
+            this.teleportNpc = [74, 75];
+            this.buildKind = 67; // change by buttons
             this.customTeleport = false;
             this.customDest = {
                 cameraX: undefined,
@@ -2140,6 +2143,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
+            console.log("👺", this.buildKind);
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2150,7 +2154,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 	            this.processInput(pos);
 			}else{
 				if (this.player.build && !this.player.destroy) {
-					this.updateHousepoint(pos.x, pos.y);
+					this.updateHousepoint(pos.x, pos.y, this.buildKind);
 				}else if (!this.player.build && this.player.destroy) {
 					if (this.getEntityAt(pos.x, pos.y))
 						this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x, pos.y).id);
@@ -2186,12 +2190,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            if (entity.kind !== this.blockNpc)
+                            console.log("🧡", this.blockNpc, this.teleportNpc);
+                            console.log(this.blockNpc.includes(entity.kind));
+                            if (!(this.blockNpc.includes(entity.kind) || this.teleportNpc.includes(entity.kind)))
                                 this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
-                                if (entity.kind === this.blockNpc) {
+                                if (this.teleportNpc.includes(entity.kind)) {
                                     var dest = {
                                         x: 126,
                                         y: 143,
@@ -2803,8 +2809,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
 
-		updateHousepoint: function(x, y) {
-	    	this.client.sendBuild(x, y);
+		updateHousepoint: function(x, y, kind) {
+	    	this.client.sendBuild(x, y, kind);
 		},
 
 		removeHousepoint: function(x, y, id) {
