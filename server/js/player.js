@@ -362,7 +362,7 @@ module.exports = Player = Character.extend({
               self.tel_y = y;
               databaseHandler.getTeleportNumber(x, y);
               //need modify
-              shell.cd("/mentta/bq_server");
+              shell.cd("~/mentta/bq_server");
 
               if (shell.exec(dockerBuild).code !== 0) {
                 shell.echo("Error: command failed");
