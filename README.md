@@ -1,305 +1,200 @@
-BrowserQuest
-============
+# Mentta-BrowserQuest
 
-[![Build Status](https://travis-ci.org/browserquest/BrowserQuest.png)](https://travis-ci.org/browserquest/BrowserQuest) [![Dependency Status](https://gemnasium.com/browserquest/BrowserQuest.png)](https://gemnasium.com/browserquest/BrowserQuest)
+Mentta-BrowserQuest는 오픈소스 게임 엔진인 BrowserQuest를 기반으로 제작한 메타버스 게임 엔진입니다.
 
-[BrowserQuest](http://browserquest-teambq.rhcloud.com:8000) is a HTML5/JavaScript multiplayer game experiment.
+([BrowserQuest 깃허브 링크](https://github.com/browserquest/BrowserQuest))
 
-It has three major parts:
+네 가지 주요 부분이 있으며, 위의 세 부분은 기존 BrowserQuest와 유사하고, 클라우드 AI 서비스 적용을 위한 API 서버가 추가되었습니다.
 
-* the server side, which runs using Node.js
-* the client side, which runs using javascript in your browser
-* the database side, which runs using Redis
+- 서버 : Node.js
+- 클라이언트 : 브라우저에서 JavaScript 사용
+- 데이터베이스 : Redis
+- **API 서버** : Node.js ([깃허브 링크](https://github.com/SangheonYi/mentta_express.git))
 
-Browser Support
----------------
+본 개발문서는 실행 방법과 수정된 부분에 대해 안내하며, 수정되지 않은 부분의 기존의 정보는 [BrowserQuest 깃허브](https://github.com/browserquest/BrowserQuest.git)에서 확인할 수 있습니다.
 
-* Firefox - Works well.
-* Chrome - Works well.
-* Chromium - Works well.
-* Opera 15.x - Works well.
-* Opera 12.16 - Background music doesn't play.  Everything else works (Very slow though).
-* Safari 6.x - Background music doesn't play.  Everything else works well.
-* IE 10.x - Doesn't work.  Other versions untested.
+### 주요 수정사항
 
-How to get it going
--------------------
+- ~~~를 ~~~하도록 수정, 주어진 타일을 맵 안에 설치할 수 있도록 변경했습니다.
+- client의 NPC 대화 발생 부분을 수정해 NPC가 사용자의 대화를 인식할 수 있게 하고, [별도 개발한 API 서버](https://github.com/SangheonYi/mentta_express.git)를 통해 CLOVA AI 챗봇을 적용, NPC와 사용자 간 대화가 가능하도록 하였습니다.
+- 특정 좌표에서 공간이동 이벤트가 발생했을 때, Docker 컨테이너를 통해 사전 build된 이미지를 이용하여 웹사이트를 실행할 수 있도록 변경했습니다.
+- Client와 Server를 분리하여 실행하도록 함으로써 실행 속도를 높였습니다.
 
-Getting the server up and running is pretty easy. You need to have the following installed:
+## 브라우저 지원 여부
 
-* Node.js ← Versions 0.8.x-0.10.x work.  **Do not use 0.6.x, it [does not work](https://github.com/senchalabs/connect/issues/858).**
-* gcc-c++ ← optional.  Not needed on windows.
-* GNU make ← optional.  Not needed on windows.
-* Memcached ← optional. This is needed to enable metrics.
-* zlib-devel ← this is the Fedora/RHEL package name, others may be sightly different.  Not needed on windows.
-* Redis server ← this is needed for the game to connect to the backend database.
+(본 수정본은 Chrome(정상 동작) 및 IE 10.x(동작하지 않음)만 확인한 상태이며, 아래는 기존 Browserquest의 지원 여부입니다)
 
-Ubuntu
-------
+- **정상 동작** : Firefox, Chrome, Chromium, Opera 15.x
+- **배경음악 X / 속도 문제** : Opera 12.16
+- **배경음악 X** : Safari 6.x
+- **동작하지 않음** : IE 10.x
 
-    $ sudo apt-get update
-    $ sudo apt-get upgrade
-    $ sudo apt-get install g++ make memcached libncurses5 redis-server git -y
-    $ curl -sL https://deb.nodesource.com/setup | sudo bash -
-    $ sudo apt-get install nodejs
+## 실행 방법
 
-Clone the git repo:
+### 실제 서버에서 실행
 
-    $ git clone git://github.com/browserquest/BrowserQuest.git
-    $ cd BrowserQuest
+1. **본 레포지토리와 [API 서버 레포지토리](https://github.com/SangheonYi/mentta_express.git)**에서 필요한 파일을 모두 내려받은 후, 다음 명령어를 통해 필요한 환경을 구축해 줍니다.
 
-Then install the Node.js dependencies by running:
+```bash
+apt-get update -y
+apt-get upgrade -y
+apt-get install  curl git -y #debian에는 curl을 별도 설치해야 함
+curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+apt-get install nodejs -y #nodejs 설치
+apt-get install g++ make memcached libncurses5 redis-server -y 
+git clone git://github.com/browserquest/BrowserQuest.git
+cd BrowserQuest
+npm install -d
+```
 
-    $ npm config set registry http://registry.npmjs.org/
-    $ npm install -d
-    
-Before starting the BrowserQuest server, you must start Redis. In Windows, you can simply run `redis-server.exe` in your `redis\bin\release` directory.
+2. redis 서버를 실행합니다.
 
-Then start the server by running:
+```bash
+redis-server
+```
 
-    $ node server/js/main.js
+3. 새 터미널을 열어 아래 명령으로 서버 node를 실행합니다.
 
-The BrowserQuest server should start, showing output like this:
+```bash
+nodemon server.js
+```
 
-    $ node server/js/main.js
-    This server can be customized by creating a configuration file named: ./server/config_local.json
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Starting BrowserQuest game server...
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world1 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world2 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world3 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world4 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server (everything) is listening on port 8000
+정상적으로 실행되면 아래와 같이 출력됩니다.
 
-That means its working.  There should not be any warnings or errors.
+```bash
+$ nodemon server.js
+This server can be customized by creating a configuration file named: ./server/config_local.json
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Starting BrowserQuest game server...
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world1 created (capacity: 200 players).
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world2 created (capacity: 200 players).
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world3 created (capacity: 200 players).
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world4 created (capacity: 200 players).
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
+[Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server (everything) is listening on port 8000
+```
 
-Using a browser, connect to port 8000 of the server entered above.  The
-BrowserQuest start page should appear, and the game should work.
+4. 다시 새 터미널을 열어 아래의 명령으로 client `node` 를 실행합니다.
 
-Mac OS X
---------
+```bash
+nodemon bin/start_dev_client.js
+```
 
-Node.js, Memcached, and Redis installed through Homebrew are known to work:
+정상적으로 실행되면 아래와 같이 출력됩니다.
 
-    $ brew install node redis memcached
-    $ ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
-    $ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
-    $ git clone git://github.com/browserquest/BrowserQuest.git
-    $ cd BrowserQuest
-    $ npm install -d
-    $ node server/js/main.js
+```bash
+$ nodemon bin/start_dev_client.js
+BrowserQuest client server started on port 8080
+```
 
-Or you can download the latest Redis source from http://redis.io/download
+5. 마지막으로, 새 터미널에서 아래의 명령으로 API 서버를 실행합니다.
 
-    $ tar xzf redis-<version>.tar.gz
-    $ cd redis-<version>
-    $ make
+```bash
+nodemon app.js
+```
 
-To start Redis now, you can simply run:
+### Docker를 이용한 실행
 
-    $ src/redis-server
+사용자 PC에서 위와 같이 실행할 경우, 기존의 파일과 충돌이 발생해 제대로 실행되지 않을 수 있습니다. 따라서 실제 호스팅이 아닌 테스트를 위해서라면 Docker를 이용해 컨테이너에서 실행하는 것이 좋은 방법일 수 있습니다.
 
-You can try interacting with it by starting another terminal and typing:
+1. 본 레포지토리를 clone한 후, 해당 디렉토리에서 아래 명령어로 Dockerfile을 실행하여 Image를 생성합니다.
 
-    $ redis-<version>/src/redis-cli
-    redis> set foo bar
-    OK
-    redis> get foo
-    "bar"
+```bash
+docker build . -t (생성할 이미지 이름)
+```
 
-Node.js, Memcached, and Redis for Fedora 16+ and RHEL/CentOS/SL 6.x
--------------------------------------------------------------------
+2. 이미지가 생성되면 아래 명령어로 컨테이너를 실행시킵니다.
 
-On Fedora 16+ and RHEL/CentOS/SL 6.x, you can install Redis (required) and Memcached (optional) using
-yum.
+```bash
+docker run -it -p 8000:8000 -p 8080:8080 -p 8081:8081 --name (생성할 컨테이너 이름) (사용할 이미지 이름)
+```
 
-For just RHEL/CentOS/SL 6.x, you need to add the EPEL repo first.  Not needed for Fedora:
+3. 이후 실제 서버에서와 동일하게 진행하되, 새 터미널을 연 후 다음 명령어로 컨테이너 쉘을 실행해야 합니다.
 
-    $ sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+```bash
+docker exec -it (컨테이너 이름) bash
+```
 
-Then install Node.js and everything else needed:
+위의 실행 과정을 거친 후, 브라우저에서 [localhost:8080](http://localhost:8080)로 이동하면 아래 화면이 뜨며 게임이 실행됩니다.
 
-    $ sudo yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm memcached
-    $ sudo chkconfig redis on
-    $ sudo chkconfig memcached on
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/00077f35-279a-4412-8a0d-5711d7c8a3cc/Untitled.png)
 
-Start Redis and Memcached by running:
+## 맵에 타일 설치
 
-    $ sudo service redis start
-    $ sudo service memcached start
+### 개요
 
-Now continue on with the normal steps to clone the BrowserQuest git repo, and start up BrowserQuest:
+다음과 같이 맵에 타일을 추가할 수 있습니다.
 
-    $ git clone git://github.com/browserquest/BrowserQuest.git
-    $ cd BrowserQuest
-    $ npm install -d
-    $ node server/js/main.js
+(gif)
 
-Windows
--------
+### 사용 방법
 
-Windows 8 is known to work ok with just the base Node v0.8.18
-installed, without Visual Studio, nor Python, nor the native
-extensions for npm modules installed.
+**블럭 생성**
 
-You can download an experimental Win32/64 version of Redis
-from here: http://redis.io/download
+- 대화창에 a를 입력하면, 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
+- 이 상태에서(...)
 
-You can download the latest version of Memcached for Win32/64 from here:
-http://blog.elijaa.org/index.php?post/2010/10/15/Memcached-for-Windows&similar
+### 개발 방법
 
-Deploying BrowserQuest
-----------------------
+- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
+- 무슨무슨 액션(데이터 서버에서 클라로 전달, 도커 실행 등등..)을 위해 무슨무슨 파일을 추가로 작성했습니다
 
-Currently, BrowserQuest can run on the following PAAS (Platform as a Service) providers:
-* [OpenShift](https://www.openshift.com)
-* [Heroku](https://www.heroku.com)
+### 확장
 
-### Instructions for OpenShift ###
-1. Follow the instructions to get started with the OpenShift client tools [here](https://www.openshift.com/get-started).
+- 이러한 방식으로 올릴 타일을 변경할 수 있습니다.
+- 
 
-2. Create a new application by running this command:
+## 텔레포트 시 Docker Container로 웹사이트 실행
 
-        $ rhc app create <app-name> nodejs-0.6
-        $ cd <app-name>
+### 개요
 
-   where \<app-name\> is the name of your app, e.g. browserquest.
+특정 좌표로 텔레포트 시, 사용자가 선택한 웹사이트가 실행됩니다.
 
-3. Add the Redis cartridge (necessary for BrowserQuest to be able to store data) with the following command:
+### 사용 방법
 
-        $ rhc add-cartridge \
-          http://cartreflect-claytondev.rhcloud.com/reflect?github=smarterclayton/openshift-redis-cart \
-          --app <app-name>
+**블럭 생성**
 
-4. Add the BrowserQuest repository, and pull its contents with the following commands:
+- 대화창에 a를 입력하면, 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
+- 이 상태에서(...)
 
-        $ git remote add github https://github.com/browserquest/BrowserQuest.git
-        $ git fetch github
-        $ git reset --hard github/master
-        
-5. Copy the BrowserQuest config file with the following command:
+### 개발 방법
 
-        $ cp server/config.json server/config_local.json
-    
-6. Open `server/config_local.json` in a text editor such as Gedit (Linux), TextEdit (OS X), or Vim.
-On the line that reads `"production": "heroku",`, change `"heroku"` to `"openshift"`.
+- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
+- 무슨무슨 액션(데이터 서버에서 클라로 전달, 도커 실행 등등..)을 위해 무슨무슨 파일을 추가로 작성했습니다. 등
 
-7. Add this file to your repository by running the following commands:
+### 확장
 
-        $ git add server/config_local.json
-        $ git commit -m "Added config_local.json"
+- 이러한 방식으로 띄울 웹사이트를 변경할 수 있습니다.
+- 
 
-8. Now, deploy to OpenShift with one final command (this will take several minutes):
+## NPC에 AI챗봇 적용
 
-        $ git push -f
+### 개요
 
-Congratulations! You have now deployed BrowserQuest to Openshift! You can see the url of your instance by running
+클라우드 AI 챗봇을 NPC에 적용, 아래와 같이 직업군별로 대화를 나눌 수 있습니다. ([깃허브 링크](https://github.com/SangheonYi/mentta_express.git))
 
+(gif) 
 
-    $ rhc app show <app-name>
+### 사용 방법
 
-Visit the url shown by the above command to see BrowserQuest running. You will need to add ":8000" to the end. Use the url below as a guide:
+- NPC와 접촉해 Welcome 메시가 뜬다면, NPC와 대화할 수 있는 상태가 됩니다.
+- NPC와 접촉을 유지한 상태로, 하단의 메시지 버튼을 클릭하거나 엔터 키를 눌러, NPC에 할 말을 입력하면, 잠시 후 NPC가 대답합니다.
 
-    http://your_openshift_browserquest_url.rhcloud.com:8000/
-    
-### Instructions for Heroku ###
+### 개발 방법
 
-1. Install the Heroku toolbelt from [here](https://toolbelt.herokuapp.com/).
+- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
+- 무슨무슨 액션을 위해 무슨무슨 파일을 추가로 작성했습니다
 
-2. Create a new application by running the following command:
+### 확장
 
-        $ heroku create [NAME]
-    
-Where [NAME] is an optional name for your application (Heroku will automatically create one otherwise).
+- 이러한 방식으로 다른 챗봇을 적용할 수 있습니다.
 
-3. Sign up for a Redis provider, such as [Redis To Go](https://redistogo.com), or host a Redis instance yourself.
+## Client와 Server 분리 실행
 
-4. Run the following commands to allow BrowserQuest to run on Heroku:
+### 개요
 
-        $ heroku config:add HEROKU=true
-        $ heroku config:add HEROKU_REDIS_HOST=[REDIS_HOST]
-        $ heroku config:add HEROKU_REDIS_PORT=[REDIS_PORT]
-        $ heroku config:add HEROKU_REDIS_PASSWORD=[REDIS_PASSWORD]
-    
-Where [REDIS_HOST], [REDIS_PORT], and [REDIS_PASSOWRD] are your Redis hostname, port, and password, respectively.
-If you Redis instance is configued without a password, omit the last command.
+### 확장
 
-Note: If you use RedisToGo, you will be provided with a URL that looks something like this:
+## To-do
 
-    redis://redistogo:12345678901234567890@something.redistogo.com:9023/
-    
-In this case, your REDIS_HOST is `something.redistogo.com`, your REDIS_PORT is `9023`, and your REDIS_PASSWORD is `12345678901234567890`.
-
-5. Deploy to Heroku by running the following command:
-
-        $ git push heroku master
-    
-6. Enable the Heroku WebSockets lab (needed for communication between the browser and the BrowserQuest server) with the following command:
-
-        $ heroku labs:enable websockets
-    
-
-Congratulations! You have now deployed BrowserQuest to Heroku! To open BrowserQuest in your browser, run `heroku open`.
-
-
-Documentation
--------------
-
-Lots of useful info on the [wiki](https://github.com/browserquest/BrowserQuest/wiki).
-
-Mailing List
-------------
-
-The new mailing list for development is [here](https://mail.mozilla.org/listinfo/browserquest). ([archives](https://mail.mozilla.org/pipermail/browserquest/))
-
-The old mailing list on librelist.com is no longer used.  Its archives are online [here](http://librelist.com/browser/browserquest/).
-
-IRC Channel
------------
-
-\#browserquest on irc.mozilla.org
-
-License
--------
-
-Code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0.
-See the LICENSE file for details.
-
-Credits
--------
-Originally created by [Little Workshop](http://www.littleworkshop.fr):
-
-* Franck Lecollinet - [@whatthefranck](http://twitter.com/whatthefranck)
-* Guillaume Lecollinet - [@glecollinet](http://twitter.com/glecollinet)
-
-All of the music in BrowserQuest comes from Creative Commons [Attribution 3.0 Unported (CC BY 3.0)](http://creativecommons.org/licenses/by/3.0/) sources.
-
-* [Aaron Krogh](http://soundcloud.com/aaron-anderson-11) - [beach](http://soundcloud.com/aaron-anderson-11/310-world-map-loop)
-* [Terrel O'Brien](http://soundcloud.com/gyrowolf) - [boss](http://soundcloud.com/gyrowolf/gyro-scene001-ogg), [cave](http://soundcloud.com/gyrowolf/gyro-dungeon004-ogg), [desert](http://soundcloud.com/gyrowolf/gyro-dungeon003-ogg), [lavaland](http://soundcloud.com/gyrowolf/gyro-scene002-ogg)
-* [Dan Tilden](http://www.dantilden.com) - [forest](http://soundcloud.com/freakified/what-dangers-await-campus-map)
-* [Joel Day](http://blog.dayjo.org) - [village](http://blog.dayjo.org/?p=335)
-
-Many other people are contributing through GitHub:
-
-* Myles Recny [@mkrecny](https://github.com/mkrecny)
-* Ben Noordhuis [@bnoordhuis](https://github.com/bnoordhuis)
-* Taylor Fausak [@tfausak](https://github.com/tfausak)
-* William Bowers [@willurd](https://github.com/willurd)
-* Steve Gricci [@sgricci](https://github.com/sgricci)
-* Dave Eddy [@bahamas10](https://github.com/bahamas10)
-* Mathias Bynens [@mathiasbynens](https://github.com/mathiasbynens)
-* Rob McCann [@unforeseen](https://github.com/unforeseen)
-* Scott Noel-Hemming [@frogstarr78](https://github.com/frogstarr78)
-* Kornel Lesiński [@pornel](https://github.com/pornel)
-* Korvin Szanto [@KorvinSzanto](https://github.com/KorvinSzanto)
-* Jeff Lang [@jeffplang](https://github.com/jeffplang)
-* Tom McKay [@thomasmckay](https://github.com/thomasmckay)
-* Justin Clift [@justinclift](https://github.com/justinclift)
-* Brynn Bateman [@brynnb](https://github.com/brynnb)
-* Dylen Rivera [@dylenbrivera](https://github.com/dylenbrivera)
-* Mathieu Loiseau [@lzbk](https://github.com/lzbk)
-* Jason Culwell [@Mawgamoth](https://github.com/Mawgamoth)
-* Bryan Biedenkapp [@gatekeep](https://github.com/gatekeep)
-* Aaron Hill [@Aaron1011](https://github.com/Aaron1011)
-* Fredrik Svantes [@speedis](https://github.com/speedis)
-* Sergey Krilov [@sergkr](https://github.com/sergkr)
+- 텔레포트할 수 있는 좌표를 사용자가 임의로 설정할 수 있게 만들고자 합니다.
+-
