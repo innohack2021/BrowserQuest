@@ -117,6 +117,18 @@ define(['npc'], function(Npc) {
             init: function(id) {
                 this._super(id, Types.Entities.HOUSE3, 1);
             }
+        }),
+
+        Woodtile: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.WOODTILE, 1);
+            }
+        }),
+
+        Wooddoor: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.WOODDOOR, 1);
+            }
         })
     };
 

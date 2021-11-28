@@ -220,5 +220,12 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
         return new NPCs.House3(id);
     };
 
+    EntityFactory.builders[Types.Entities.WOODTILE] = function(id) {
+        return new NPCs.Woodtile(id);
+    };
+
+    EntityFactory.builders[Types.Entities.WOODDOOR] = function(id) {
+        return new NPCs.Wooddoor(id);
+    };
     return EntityFactory;
 });

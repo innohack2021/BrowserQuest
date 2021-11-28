@@ -110,6 +110,8 @@ Types = {
 		HOUSE: 56,
 		HOUSE2: 57,
 		HOUSE3: 58,
+		WOODTILE: 67,
+		WOODDOOR: 68,
 
         // Weapons
         SWORD1: 60,
@@ -210,6 +212,8 @@ var kinds = {
     house: [Types.Entities.HOUSE, "npc"],
     house2: [Types.Entities.HOUSE2, "npc"],
     house3: [Types.Entities.HOUSE3, "npc"],
+	woodtile: [Types.Entities.WOODTILE, "npc"],
+	wooddoor: [Types.Entities.WOODDOOR, "npc"],
 
     getType: function(kind) {
         return kinds[Types.getKindAsString(kind)][1];

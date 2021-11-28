@@ -309,7 +309,7 @@ module.exports = Player = Character.extend({
 				var x = message[1],
 				    y = message[2];
 
-					self.server.addNpc(57, x, y);
+					self.server.addNpc(67, x, y);
 					databaseHandler.getHousepoint(self.name, x, y);
 	   		 }
 	   	 	else if (action == Types.Messages.REMOVE) {
