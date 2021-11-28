@@ -403,6 +403,9 @@ module.exports = Player = Character.extend({
               if (shell.exec(`docker stop ${save_container}`).code !== 0) {
                 shell.echo("Error: command failed");
               }
+              if (shell.exec(`docker rm ${save_container}`).code !== 0) {
+                shell.echo(`Error: ${save_container} remove failed`);
+              }
             }
           }, 1000);
         }
