@@ -366,7 +366,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
-            $(document).keyup(function(e) {
+            $(document).keyup(function(e) {//false
                 var key = e.which;
 
                 if (game.started && !$('#chatbox').hasClass('active'))
@@ -396,19 +396,23 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                             game.player.moveDown = false;
                             game.player.disableKeyboardNpcTalk = false;
                             break;
-						//case Types.Keys.V:
-			    		//	game.player.build = false;
-			    		//	break;
-		        		//case Types.Keys.B:
-			    		//	game.player.destroy = false;
-			    		//	break;
+			    //case Types.Keys.V:
+			    //game.player.build = false;
+			    //break;
+		        //case Types.Keys.B:
+			    //game.player.destroy = false;
+			    //break;
+                case Types.Keys.O:
+                window.open("http://menthangverse.42seoul.kr", "con_web");
+			    game.player.showBrowser = false;
+			    break;
                         default:
                             break;
                     }
                 }
             });
 
-            $(document).keydown(function(e) {
+            $(document).keydown(function(e) {//true
                 var key = e.which,
                     $chat = $('#chatinput');
 
@@ -511,7 +515,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             //        }
             //    }
 
-                if(key === 13) {
+                if(key === 13) {//엔터쳤을 때 채팅창 나오는 것
                     if($chat.attr('value') !== '') {
                         if(game.player) {
                             game.say($chat.attr('value'));

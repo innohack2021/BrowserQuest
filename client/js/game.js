@@ -967,6 +967,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
 
+                //sna teleport event
+                var isTeleport = 0;
                 self.player.onStopPathing(function(x, y) {
                     if(self.player.hasTarget()) {
                         self.player.lookAtTarget();
@@ -1027,6 +1029,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(!self.player.isDead) {
                             self.audioManager.updateMusic();
                         }
+                        //sna teleport event
+                        console.log("client teleport code!");
+                        if (isTeleport == 0)
+                        {
+                            //window.open("https://www.naver.com", "con_web");
+                            //window.open("http://localhost:80", "con_web");
+                            isTeleport = 1;
+                        }
+                        else if (isTeleport == 1)
+                            isTeleport = 0;
                     }
 
                     if(self.player.target instanceof Npc) {

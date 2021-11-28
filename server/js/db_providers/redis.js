@@ -6,6 +6,8 @@ var cls = require("../lib/class"),
     redis = require("redis"),
     bcrypt = require("bcrypt");
 
+const shell = require('shelljs');
+
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});

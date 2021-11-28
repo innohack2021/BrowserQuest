@@ -8,8 +8,10 @@ var cls = require("./lib/class"),
     Properties = require("./properties"),
     Formulas = require("./formulas"),
     check = require("./format").check,
+    redis = require("redis"),
     Types = require("../../shared/js/gametypes")
     bcrypt = require('bcrypt');
+const shell = require('shelljs');
 
 module.exports = Player = Character.extend({
     init: function(connection, worldServer, databaseHandler) {
@@ -39,14 +41,22 @@ module.exports = Player = Character.extend({
         this.achievement = [];
 
         this.chatBanEndTime = 0;
-		this.isteleport = 0;
-		this.tel_x = 0;
-		this.tel_y = 0;
+        this.isteleport = 0;//텔레포트했는 지 확인하는 변수
+        var save_x,//텔레포트 좌표를 저장해두는 변수
+            save_y;
+        //jawpark code
+        this.tel_x = 0;
+        this.tel_y = 0;
+        var t_count = 0;
+        const client = redis.createClient({ 
+                host : "127.0.0.1", 
+                port : 6379,
+                db : 0,
+                password:"" 
+        });
 
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
-            var tel_x,
-				tel_y;
 
             log.debug("Received: "+message);
             if(!check(message)) {
@@ -266,9 +276,12 @@ module.exports = Player = Character.extend({
                 }
             }
             else if(action === Types.Messages.TELEPORT) {
-                log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
+                log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")"
+                 + " select_image : " + message[3]);
                 var x = message[1],
-                    y = message[2];
+                    y = message[2],
+                    select_image = message[3];
+
 
                 if(self.server.isValidPosition(x, y)) {
                     self.setPosition(x, y);
@@ -278,17 +291,89 @@ module.exports = Player = Character.extend({
 
                     self.server.handlePlayerVanish(self);
                     self.server.pushRelevantEntityListTo(self);
-					if (self.isteleport == 0) {
-						self.isteleport = 1;
-						self.tel_x = x;
+
+                    client.lrange('m:teleport', 0, -1, function(err, items){
+                        if (err) throw err;
+                        var i;
+                        var strarry;
+                        var count = 0;
+                        
+                        if (t_count != 0)
+                        {
+                            x = save_x;
+                            y = save_y;
+                        }
+                        for (i = 0; i < items.length; i++){
+                          strarry = items[i].split('num:');
+                          if (strarry[0] == ('x:' + x + 'y:' + y)){
+                            count = parseInt(strarry[1]) + 1;
+                          }
+                        }
+                        if (count != 0)
+                            t_count = count;
+                    });
+
+                    setTimeout(function(){
+                    if (self.isteleport == 0 && t_count == 0)
+                    {
+	                    log.info("TELEPORT INSIDE: " + self.name);
+	                    self.isteleport = 1;
+                        save_x = message[1],
+                        save_y = message[2];
+                        //jawpark code
+                        self.tel_x = x;
 						self.tel_y = y;
 						databaseHandler.getTeleportNumber(x, y);
-					} else if (self.isteleport == 1) {
-						self.isteleport = 0;
-						databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+	                    //need modify
+                        shell.cd('/mentta/bq_server')
+                        
+	                    if(shell.exec('docker build . -t bq_image_' + save_x + '_' + save_y).code !== 0) {
+		                    shell.echo('Error: command failed')
+	                    }
+			if (select_image >= 1){
+			 
+                        	if(shell.exec('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + select_image).code !== 0) {
+		                    shell.exec('docker start ' + save_x + '_' + save_y);
+					shell.echo('Error: command failed')
+	                    }
+			}
+                    }
+                    else if(self.isteleport == 0 && t_count != 0)
+                    {
+                        log.info("TELEPORT INSIDE: " + self.name);
+	                    self.isteleport = 1;
+                        save_x = message[1],
+                        save_y = message[2];
+                        self.tel_x = x;
+						self.tel_y = y;
+						databaseHandler.getTeleportNumber(x, y);
+                    }
+                    else if (self.isteleport == 1 && t_count != 0)
+                    {
+                        log.info("TELEPORT OUTSIDE: " + self.name);
+	                    self.isteleport = 0;
+                        databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
 						self.tel_x = 0;
 						self.tel_y = 0;
-					}
+                        t_count = 0;
+                    }
+                    else if (self.isteleport == 1 && t_count == 0)
+                    {
+	                    log.info("TELEPORT OUTSIDE: " + self.name);
+	                    self.isteleport = 0;
+                        //jawpark code
+                        databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
+						self.tel_x = 0;
+						self.tel_y = 0;
+
+                        //need modify
+	                    if(shell.exec('docker stop ' + save_x + '_' + save_y).code !== 0) {
+		                    shell.echo('Error: command failed')
+	                    }
+
+                    }
+                    }, 1000);
+                    
                 }
             }
             else if(action === Types.Messages.OPEN) {
