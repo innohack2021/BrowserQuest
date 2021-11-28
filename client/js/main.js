@@ -628,6 +628,58 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 
                 return false;
             });
+            $('#buildmap_block_gun').click(function(e) {
+                game.buildKind = 70;
+                console.log("🆔 gun: ", game.buildKind);
+            });
+            $('#buildmap_block_gon').click(function(e) {
+                game.buildKind = 71;
+                console.log("🆔 gon: ", game.buildKind);
+            });
+            $('#buildmap_block_gam').click(function(e) {
+                game.buildKind = 72;
+                console.log("🆔 gam: ", game.buildKind);
+            });
+            $('#buildmap_block_lee').click(function(e) {
+                game.buildKind = 73;
+                console.log("🆔 lee: ", game.buildKind);
+            });
+            $('#buildmap_block_1').click(function(e) {
+                game.buildKind = 74;
+                console.log("🆔 block1: ", game.buildKind);
+            });
+            $('#buildmap_block_2').click(function(e) {
+                game.buildKind = 75;
+                console.log("🆔 block2: ", game.buildKind);
+            });
+            $('#buildmap_block_3').click(function(e) {
+                game.buildKind = 76;
+                console.log("🆔 block3: ", game.buildKind);
+            });
+            $('#buildmap_block_4').click(function(e) {
+                game.buildKind = 77;
+                console.log("🆔 block4: ", game.buildKind);
+            });
+            $('#buildmap_block_5').click(function(e) {
+                game.buildKind = 78;
+                console.log("🆔 block5: ", game.buildKind);
+            });
+            $('#buildmap_type_hospital').click(function(e) {
+                console.log("🆔 hospital: ", game.buildKind);
+            });
+            $('#buildmap_type_store').click(function(e) {
+                game.buildKind = 75;
+                console.log("🆔 store: ", game.buildKind);
+            });
+            $('#buildmap_type_cave').click(function(e) {
+                game.buildKind = 76;
+                console.log("🆔 cave: ", game.buildKind);
+            });
+            $('#buildmap_type_house').click(function(e) {
+                game.buildKind = 77;
+                console.log("🆔 house: ", game.buildKind);
+            });
+
            if(game.renderer.tablet) {
                 $('body').addClass('tablet');
             }

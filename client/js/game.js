@@ -86,7 +86,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             // custom var by sayi
             this.buildMode = false;
             this.blockNpc = [67, 68];
-            this.teleportNpc = 67;
+            this.teleportNpc = [74, 75];
             this.buildKind = 67; // change by buttons
             this.customTeleport = false;
             this.customDest = {
@@ -2142,8 +2142,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-			var kind = 67;
-
+            console.log("👺", this.buildKind);
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2154,7 +2153,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 	            this.processInput(pos);
 			}else{
 				if (this.player.build && !this.player.destroy) {
-					this.updateHousepoint(pos.x, pos.y, kind);
+					this.updateHousepoint(pos.x, pos.y, this.buildKind);
 				}else if (!this.player.build && this.player.destroy) {
 					if (this.getEntityAt(pos.x, pos.y))
 						this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x, pos.y).id);
@@ -2190,14 +2189,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         this.makePlayerTalkTo(entity);
                     } else {
                         if(!this.player.disableKeyboardNpcTalk) {
-                            console.log("🧡", this.blockNpc);
+                            console.log("🧡", this.blockNpc, this.teleportNpc);
                             console.log(this.blockNpc.includes(entity.kind));
-                            if (this.blockNpc.includes(entity.kind) && entity.kind !== this.teleportNpc)
+                            if (!(this.blockNpc.includes(entity.kind) || this.teleportNpc.includes(entity.kind)))
                                 this.makeNpcTalk(entity, null);
 
                             if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
                             {
-                                if (entity.kind === this.teleportNpc) {
+                                if (this.teleportNpc.includes(entity.kind)) {
                                     var dest = {
                                         x: 126,
                                         y: 143,
