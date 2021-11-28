@@ -329,7 +329,7 @@ module.exports = Player = Character.extend({
             }
             if (count != 0) t_count = count;
           });
-
+          //////////
           setTimeout(function () {
             log.info(
               "🧦 isteleport: " + self.isteleport + " t_count: " + t_count
@@ -350,16 +350,13 @@ module.exports = Player = Character.extend({
                   " " +
                   message[3]
               );
-              const containerName = `${save_x}_${save_y}`;
-              const imageTag = `${save_x}_${containerName}`;
-              const dockerRun =
-                "docker run -d -i -p 80:80 -p 443:443 --name " +
-                containerName +
-                " " +
-                imageTag;
-              const dockerStart = "docker start " + containerName;
+              const imageTag = `${save_x}_${save_y}_${select_image}`;
+              const dockerRun = `docker run -d -i -p 80:80 -p 443:443 --name ${imageTag} ${imageTag}`;
+              const dockerStart = "docker start " + imageTag;
+              const dockerBuild = `docker build ./${select_image} ${imageTag}`;
               log.info("🎶 run: " + dockerRun);
               log.info("🎶 start: " + dockerStart);
+              log.info("🎶 start: " + dockerBuild);
               //jawpark code
               self.tel_x = x;
               self.tel_y = y;
@@ -367,7 +364,7 @@ module.exports = Player = Character.extend({
               //need modify
               shell.cd("/mentta/bq_server");
 
-              if (shell.exec("docker build . " + imageTag).code !== 0) {
+              if (shell.exec(dockerBuild).code !== 0) {
                 shell.echo("Error: command failed");
               }
               if (select_image >= 1) {
@@ -384,14 +381,14 @@ module.exports = Player = Character.extend({
               self.tel_y = y;
               databaseHandler.getTeleportNumber(x, y);
             } else if (self.isteleport == 1 && t_count != 0) {
-              log.info("TELEPORT OUTSIDE: " + self.name);
+              log.info("TELEPORT 1 && !0 OUTSIDE: " + self.name);
               self.isteleport = 0;
               databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
               self.tel_x = 0;
               self.tel_y = 0;
               t_count = 0;
             } else if (self.isteleport == 1 && t_count == 0) {
-              log.info("TELEPORT OUTSIDE: " + self.name);
+              log.info("TELEPORT 1 && 0 OUTSIDE: " + self.name);
               self.isteleport = 0;
               //jawpark code
               databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
@@ -399,9 +396,7 @@ module.exports = Player = Character.extend({
               self.tel_y = 0;
 
               //need modify
-              if (
-                shell.exec("docker stop " + save_x + "_" + save_y).code !== 0
-              ) {
+              if (shell.exec("docker stop " + imageTag).code !== 0) {
                 shell.echo("Error: command failed");
               }
             }
