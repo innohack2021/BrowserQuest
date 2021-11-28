@@ -326,7 +326,7 @@ module.exports = Player = Character.extend({
             for (i = 0; i < items.length; i++) {
               strarry = items[i].split("num:");
               if (strarry[0] == "x:" + x + "y:" + y) {
-                count = parseInt(strarry[1]) + 1 - 4; //어거지로 4뺀다.
+                count = parseInt(strarry[1]) + 1 - 5; //어거지로 4뺀다.
               }
             }
             if (count != 0) t_count = count;
