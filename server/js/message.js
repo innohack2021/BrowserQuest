@@ -148,7 +148,8 @@ Message.Build = Message.extend({
     serialize: function() {
 	return [Types.Messages.BUILD,
 		this.entity.x,
-		this.entity.y];
+		this.entity.y,
+		this.entity.kind];
     }
 });
 

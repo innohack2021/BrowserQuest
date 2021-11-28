@@ -2140,6 +2140,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
+			var kind = 67;
+
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2150,7 +2152,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 	            this.processInput(pos);
 			}else{
 				if (this.player.build && !this.player.destroy) {
-					this.updateHousepoint(pos.x, pos.y);
+					this.updateHousepoint(pos.x, pos.y, kind);
 				}else if (!this.player.build && this.player.destroy) {
 					if (this.getEntityAt(pos.x, pos.y))
 						this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x, pos.y).id);
@@ -2803,8 +2805,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
 
-		updateHousepoint: function(x, y) {
-	    	this.client.sendBuild(x, y);
+		updateHousepoint: function(x, y, kind) {
+	    	this.client.sendBuild(x, y, kind);
 		},
 
 		removeHousepoint: function(x, y, id) {
