@@ -509,6 +509,10 @@ footer, header, hgroup, menu, nav, section {
 
 	@media screen and (min-width: 1501px) {
 	    
+        .upscaled #buildmap_teleport {background-image:url('../img/3/buildmap.png');}
+        .upscaled #buildmap_type {background-image:url('../img/3/buildmap.png');}
+        .upscaled #buildmap_block {background-image:url('../img/3/buildmap.png');}
+        .upscaled #buildmap_build {background-image:url('../img/3/buildmap.png');}
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
 	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population div{background-image:url('../img/3/barsheet.png');}
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
@@ -687,12 +691,19 @@ footer, header, hgroup, menu, nav, section {
 
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
+        .upscaled #buildmap_teleport {background-image:url('../img/2/buildmap.png');}
+        .upscaled #buildmap_type_hospital, .upscaled #buildmap_type_store, .upscaled #buildmap_type_cave, .upscaled #buildmap_type_house {background-image:url('../img/2/buildmap.png');}
+        .upscaled #buildmap_block_gun, .upscaled #buildmap_block_gon, .upscaled #buildmap_block_gam, .upscaled #buildmap_block_lee {background-image:url('../img/2/buildmap.png');}
+        .upscaled #buildmap_block_1, .upscaled #buildmap_block_2, .upscaled #buildmap_block_3, .upscaled #buildmap_block_4, .upscaled #buildmap_block_5 {background-image:url('../img/2/buildmap.png');}
+        .upscaled #buildmap_build {background-image:url('../img/2/buildmap.png');}
+
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
 	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population div{background-image:url('../img/2/barsheet.png');}
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
 
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
         body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
+        #buildmap_teleport, #buildmap_type_hospital, #buildmap_type_store, #buildmap_type_cave, #buildmap_type_house, #buildmap_block_gun, #buildmap_block_gon, #buildmap_block_gam, #buildmap_block_lee, #buildmap_block_1, #buildmap_block_2, #buildmap_block_3, #buildmap_block_4, #buildmap_block_5, #buildmap_build {background-size:300px auto;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
         #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
@@ -767,6 +778,23 @@ footer, header, hgroup, menu, nav, section {
         #loadcharacter .ribbon {right:99px;top:-8px;}
         
         #close-legal {font-size:14px;margin-top:30px;}
+
+        /* buildmap */
+        #buildmap_teleport {width:53px;height:20px;margin:20px auto 0 auto;background-position: 0 0px;}
+        #buildmap_type_hospital {width:61px;height:23px;margin-top:20px; margin-left:200px; background-position: 0 -21px;}
+        #buildmap_type_store {width:61px;height:23px;margin-top:-23px;margin-left:281px; background-position: -62px -21px;}
+        #buildmap_type_cave {width:61px;height:23px;margin-top:-23px;margin-left:362px; background-position: -123px -21px;}
+        #buildmap_type_house {width:61px;height:25px;margin-top:-23px;margin-left:443px; background-position: -184px -23px;}
+        #buildmap_block_gun{width:41px;height:41px;margin:20px auto 0 auto; margin-left:200px; background-position: 0 -48px;}
+        #buildmap_block_gon{width:41px;height:41px;margin-left:261px; background-position: -42px -48px;}
+        #buildmap_block_gam{width:41px;height:41px;margin-left:322px; background-position: -83px -48px;}
+        #buildmap_block_lee{width:41px;height:41px;margin-left:383px; background-position: -124px -48px;}
+        #buildmap_block_1{width:41px;height:41px;margin:20px auto 0 auto;margin-left:200px; background-position: 0 -88px;}
+        #buildmap_block_2{width:41px;height:41px;margin-left:261px; background-position: -41px -88px;}
+        #buildmap_block_3{width:41px;height:41px;margin-left:322px; background-position: -81px -88px;}
+        #buildmap_block_4{width:41px;height:41px;margin-left:383px; background-position: -121px -88px;}
+        #buildmap_block_5{width:41px;height:41px;margin-left:444px; background-position: -161px 0px;}
+        #buildmap_build {width:150px;height:50px;margin:20px auto 0 auto;background-position: 0 -177px;}
         
         /*Death & Respawn*/
         #death p {font-size:20px;margin-top:90px;}
@@ -890,6 +918,7 @@ footer, header, hgroup, menu, nav, section {
         canvas {image-rendering:optimizeSpeed;}
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
         body {background:-webkit-gradient(radial, center center, 200, center center, 600, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
+        #buildmap {background-image:url('../img/1/buildmap.png');}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
         #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;}
         #logosparks {width:229px;height:42px;z-index:4;-moz-animation:logo1 .8s steps(6, end) infinite;-webkit-animation:logo1 .8s steps(6, end) infinite;-o-animation:logo1 .8s steps(6, end) infinite;-ms-animation:logo1 .8s steps(6, end) infinite;}
