@@ -600,16 +600,16 @@ module.exports = DatabaseHandler = cls.Class.extend({
 			if(check == 0){
 				client.lpush('m:house', 'u:' + name + ' ' + x + ' ' + y);
 				log.info('Get House Point: ' + name + ' (' + x + ' ' + y + ')');
-				return ;
+				return;
 			} else {
 				log.info('The place that already exists');
-				return ;
+				return;
 			}
 		});
    },
 
 	delHousepoint: function(name, x, y){
-		client.lrange('m:house', 0, -1, function(err, items) {
+		var revalue = client.lrange('m:house', 0, -1, function(err, items) {
 			if (err) throw err;
 			items.forEach(function(item, i) {
 				if (item == ('u:' + name + ' ' + x + ' ' + y)) {

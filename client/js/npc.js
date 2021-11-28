@@ -8,9 +8,7 @@ define(['require','character'], function(require, Character) {
             const chatUrl = "http://localhost:8081/clovaChat";
             var script = "hi stranger";
             console.log(this.itemKind);
-            console.log('🐱‍🚀', description);
             try {
-                console.log(`🤍`);
                 const fetchInit = {
                     method: "POST",
                     headers: {
@@ -24,7 +22,6 @@ define(['require','character'], function(require, Character) {
                 script = await fetch(chatUrl, fetchInit)
                                     .then(async (response) => await response.json())
                                     .catch((error) => console.log("error:", error));
-                console.log(script);
                 script = script.chat
             } catch(e) {
                 console.log('💔', e)

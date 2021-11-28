@@ -77,7 +77,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // sprites
             this.spriteNames = ["hand", "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton", "skeleton2", "spectre", "boss", "deathknight",
-                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest",
+                                "ogre", "crab", "snake", "eye", "bat", "goblin", "wizard", "guard", "king", "villagegirl", "villager", "coder", "agent", "rick", "scientist", "nyan", "priest", "house", "house2", "house3",
                                 "sorcerer", "octocat", "beachnpc", "forestnpc", "desertnpc", "lavanpc", "clotharmor", "leatherarmor", "mailarmor",
                                 "platearmor", "redarmor", "goldenarmor", "firefox", "death", "sword1", "axe", "chest",
                                 "sword2", "redsword", "bluesword", "goldensword", "item-sword2", "item-axe", "item-redsword", "item-bluesword", "item-goldensword", "item-leatherarmor", "item-mailarmor",
@@ -981,8 +981,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             dest = self.customDest;
                             self.customTeleport = false;
                         }
-                        console.log("🤢 dest: ",dest);
-                        console.log(self.player);
                         self.player.setGridPosition(dest.x, dest.y);
                         self.player.nextGridX = dest.x;
                         self.player.nextGridY = dest.y;
@@ -2142,7 +2140,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function()
         {
             var pos = this.getMouseGridPosition();
-            console.log("clicked pos: ",pos);
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
@@ -2152,10 +2149,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 			if (!this.buildMode){
 	            this.processInput(pos);
 			}else{
-				if (this.player.build && !this.player.destroy){
-					this.updateHousepoint(pos.x,pos.y);
-				}else if (!this.player.build && this.player.destroy){
-					this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x,pos.y).id);
+				if (this.player.build && !this.player.destroy) {
+					this.updateHousepoint(pos.x, pos.y);
+				}else if (!this.player.build && this.player.destroy) {
+					if (this.getEntityAt(pos.x, pos.y))
+						this.removeHousepoint(pos.x,pos.y, this.getEntityAt(pos.x, pos.y).id);
 				}
 			}
         },
@@ -2205,7 +2203,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     this.customTeleport = true;
                                     this.customDest.x = this.player.nextGridX;
                                     this.customDest.y = this.player.nextGridY;
-                                    console.log("💟 return dest: ", this.customDest);
                                     this.player.setGridPosition(dest.x, dest.y);
                                     this.player.nextGridX = dest.x;
                                     this.player.nextGridY = dest.y;
@@ -2807,7 +2804,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
 		updateHousepoint: function(x, y) {
-	    	this.client.sendBuild(x,y);
+	    	this.client.sendBuild(x, y);
 		},
 
 		removeHousepoint: function(x, y, id) {
