@@ -2,8 +2,6 @@
 
 Mentta-BrowserQuest는 오픈소스 게임 엔진인 BrowserQuest를 기반으로 제작한 메타버스 게임 엔진입니다.
 
-([BrowserQuest 깃허브 링크](https://github.com/browserquest/BrowserQuest))
-
 네 가지 주요 부분이 있으며, 위의 세 부분은 기존 BrowserQuest와 유사하고, 클라우드 AI 서비스 적용을 위한 API 서버가 추가되었습니다.
 
 - 서버 : Node.js
