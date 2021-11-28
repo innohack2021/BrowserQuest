@@ -353,7 +353,7 @@ module.exports = Player = Character.extend({
               const imageTag = `${save_x}_${save_y}_${select_image}`;
               const dockerRun = `docker run -d -i -p 80:80 -p 443:443 --name ${imageTag} ${imageTag}`;
               const dockerStart = "docker start " + imageTag;
-              const dockerBuild = `docker build ./${select_image} ${imageTag}`;
+              const dockerBuild = `docker build ./${select_image} -t ${imageTag}`;
               log.info("🎶 run: " + dockerRun);
               log.info("🎶 start: " + dockerStart);
               log.info("🎶 start: " + dockerBuild);
