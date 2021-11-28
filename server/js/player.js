@@ -328,6 +328,7 @@ module.exports = Player = Character.extend({
               if (strarry[0] == "x:" + x + "y:" + y) {
                 count = 0;
                 // parseInt(strarry[1]) + 1 ;
+                log.info(`💫 strarry: ${parseInt(strarry[1])}`);
               }
             }
             if (count != 0) t_count = count;
