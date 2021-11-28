@@ -2214,7 +2214,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     this.player.nextGridX = dest.x;
                                     this.player.nextGridY = dest.y;
                                     this.player.turnTo(dest.orientation);
-                                    this.client.sendTeleport(dest.x, dest.y, -1);
+                                    this.client.sendTeleport(dest.x, dest.y, this.containerId);
 
                                     if(this.renderer.mobile && dest.cameraX && dest.cameraY) {
                                         this.camera.setGridPosition(dest.cameraX, dest.cameraY);
