@@ -276,9 +276,12 @@ module.exports = Player = Character.extend({
                 }
             }
             else if(action === Types.Messages.TELEPORT) {
-                log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")");
+                log.info("TELEPORT: " + self.name + "(" + message[1] + ", " + message[2] + ")"
+                 + "select_image : " + message[3]);
                 var x = message[1],
-                    y = message[2];
+                    y = message[2],
+                    select_image = message[3];
+
 
                 if(self.server.isValidPosition(x, y)) {
                     self.setPosition(x, y);
@@ -324,6 +327,7 @@ module.exports = Player = Character.extend({
                         //console.log('docker build . -t bq_image_' + save_x + '_' + save_y);
                         //console.log('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y)
 
+                        /*
 	                    //need modify
                         shell.cd('/mentta/bq_server')
                         
@@ -332,8 +336,9 @@ module.exports = Player = Character.extend({
 		                    shell.echo('Error: command failed')
 		                    //shell.exit(1)
 	                    }
+                        */
 
-                        if(shell.exec('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + save_x + '_' + save_y).code !== 0) {
+                        if(shell.exec('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + select_image).code !== 0) {
 		                    shell.echo('Error: command failed')
 		                    //shell.exit(1)
 	                    }
