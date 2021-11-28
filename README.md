@@ -179,18 +179,11 @@ docker exec -it (컨테이너 이름) bash
 
 ### 개발 방법
 
-- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
-- 무슨무슨 액션을 위해 무슨무슨 파일을 추가로 작성했습니다
+- Clova chatbot api 서버(https://github.com/SangheonYi/mentta_express.git)를 작성하여 ai chatbot과 대화 메시지를 주고 받을 수 있도록 했습니다.
 
 ### 확장
 
-- 이러한 방식으로 다른 챗봇을 적용할 수 있습니다.
-
-## Client와 Server 분리 실행
-
-### 개요
-
-### 확장
+- http 통신을 사용하는 api라면 요청 메시지 작성, 응답 메시지 파싱 부분만 수정해서 다른 ai chatbot을 적용할 수 있습니다.
 
 ## To-do
 
