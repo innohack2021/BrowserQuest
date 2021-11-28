@@ -42,7 +42,9 @@ module.exports = Player = Character.extend({
     this.chatBanEndTime = 0;
     this.isteleport = 0; //텔레포트했는 지 확인하는 변수
     var save_x, //텔레포트 좌표를 저장해두는 변수
-      save_y;
+      save_y,
+      save_container;
+
     //jawpark code
     this.tel_x = 0;
     this.tel_y = 0;
@@ -372,6 +374,7 @@ module.exports = Player = Character.extend({
                   shell.exec(dockerStart);
                   shell.echo("Error: command failed");
                 }
+                save_container = imageTag;
               }
             } else if (self.isteleport == 0 && t_count != 0) {
               log.info("TELEPORT 0 && !0 INSIDE: " + self.name);
