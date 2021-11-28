@@ -86,9 +86,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // custom var by sayi
             this.buildMode = false;
-            this.blockNpc = [67, 68, 70, 71, 72, 73, 76, 77, 78, 79];
+            this.blockNpc = [ 70, 71, 72, 73, 76, 77, 78, 79];
             this.teleportNpc = [74, 75];
-            this.buildKind = 67; // change by buttons
+            this.buildKind = 70; // change by buttons
             this.containerId = 1;
             this.customTeleport = false;
             this.customDest = {
