@@ -24,7 +24,7 @@ COPY ../srcs/config.inc.php var/www/html/phpmyadmin/config.inc.php
 RUN chmod 705 var/www/html/phpmyadmin/config.inc.php
 
 #wordpress
-COPY cave.html index.html
+COPY house.html index.html
 RUN mv index.html var/www/html/
 RUN chown -R www-data:www-data /var/www/html/index.html
 
