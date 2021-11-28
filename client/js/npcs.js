@@ -101,36 +101,65 @@ define(['npc'], function(Npc) {
             }
         }),
 
-        House: Npc.extend({
+        Blockgun: Npc.extend({
             init: function(id) {
-                this._super(id, Types.Entities.HOUSE, 1);
+                this._super(id, Types.Entities.BLOCKGUN, 1);
             }
         }),
 
-        House2: Npc.extend({
+        Blockgon: Npc.extend({
             init: function(id) {
-                this._super(id, Types.Entities.HOUSE2, 1);
+                this._super(id, Types.Entities.BLOCKGON, 1);
             }
         }),
 
-        House3: Npc.extend({
+        Blockgam: Npc.extend({
             init: function(id) {
-                this._super(id, Types.Entities.HOUSE3, 1);
+                this._super(id, Types.Entities.BLOCKGAM, 1);
             }
         }),
 
-        Woodtile: Npc.extend({
+        Blocklee: Npc.extend({
             init: function(id) {
-                this._super(id, Types.Entities.WOODTILE, 1);
+                this._super(id, Types.Entities.BLOCKLEE, 1);
             }
         }),
 
-        Wooddoor: Npc.extend({
+        Blockdoor: Npc.extend({
             init: function(id) {
-                this._super(id, Types.Entities.WOODDOOR, 1);
+                this._super(id, Types.Entities.BLOCKDOOR, 1);
+            }
+        }),
+
+        Blockcave: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.BLOCKCAVE, 1);
+            }
+        }),
+
+        Blocksoil: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.BLOCKSOIL, 1);
+            }
+        }),
+
+        Blockrock: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.BLOCKROCK, 1);
+            }
+        }),
+
+        Blockwood: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.BLOCKWOOD, 1);
+            }
+        }),
+
+        Blocksand: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.BLOCKSAND, 1);
             }
         })
     };
-
     return NPCs;
 });

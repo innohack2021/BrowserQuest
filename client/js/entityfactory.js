@@ -208,24 +208,45 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
         return new NPCs.LavaNpc(id);
     };
 
-    EntityFactory.builders[Types.Entities.HOUSE] = function(id) {
-        return new NPCs.House(id);
+    EntityFactory.builders[Types.Entities.BLOCKGUN] = function(id) {
+        return new NPCs.Blockgun(id);
     };
 
-    EntityFactory.builders[Types.Entities.HOUSE2] = function(id) {
-        return new NPCs.House2(id);
+    EntityFactory.builders[Types.Entities.BLOCKGON] = function(id) {
+        return new NPCs.Blockgon(id);
     };
 
-    EntityFactory.builders[Types.Entities.HOUSE3] = function(id) {
-        return new NPCs.House3(id);
+    EntityFactory.builders[Types.Entities.BLOCKGAM] = function(id) {
+        return new NPCs.Blockgam(id);
     };
 
-    EntityFactory.builders[Types.Entities.WOODTILE] = function(id) {
-        return new NPCs.Woodtile(id);
+    EntityFactory.builders[Types.Entities.BLOCKLEE] = function(id) {
+        return new NPCs.Blocklee(id);
     };
 
-    EntityFactory.builders[Types.Entities.WOODDOOR] = function(id) {
-        return new NPCs.Wooddoor(id);
+    EntityFactory.builders[Types.Entities.BLOCKDOOR] = function(id) {
+        return new NPCs.Blockdoor(id);
     };
+
+    EntityFactory.builders[Types.Entities.BLOCKCAVE] = function(id) {
+        return new NPCs.Blockcave(id);
+    };
+
+    EntityFactory.builders[Types.Entities.BLOCKSOIL] = function(id) {
+        return new NPCs.Blocksoil(id);
+    };
+
+    EntityFactory.builders[Types.Entities.BLOCKROCK] = function(id) {
+        return new NPCs.Blockrock(id);
+    };
+
+    EntityFactory.builders[Types.Entities.BLOCKWOOD] = function(id) {
+        return new NPCs.Blockwood(id);
+    };
+
+    EntityFactory.builders[Types.Entities.BLOCKSAND] = function(id) {
+        return new NPCs.Blocksand(id);
+    };    
+
     return EntityFactory;
 });
