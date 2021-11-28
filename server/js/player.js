@@ -324,7 +324,7 @@ module.exports = Player = Character.extend({
             for (i = 0; i < items.length; i++) {
               strarry = items[i].split("num:");
               if (strarry[0] == "x:" + x + "y:" + y) {
-                count = parseInt(strarry[1]) + 1;
+                count = parseInt(strarry[1]) + 1 - 4; //어거지로 4뺀다.
               }
             }
             if (count != 0) t_count = count;
@@ -334,6 +334,7 @@ module.exports = Player = Character.extend({
             log.info(
               "🧦 isteleport: " + self.isteleport + " t_count: " + t_count
             );
+
             if (self.isteleport == 0 && t_count == 0) {
               log.info("TELEPORT 0 && 0 INSIDE: " + self.name);
               self.isteleport = 1;
