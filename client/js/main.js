@@ -665,19 +665,20 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 console.log("🆔 block5: ", game.buildKind);
             });
             $('#buildmap_type_hospital').click(function(e) {
-                console.log("🆔 hospital: ", game.buildKind);
+                game.containerId = 1;
+                console.log("🆔 hospital: ", game.containerId);
             });
             $('#buildmap_type_store').click(function(e) {
-                game.buildKind = 75;
-                console.log("🆔 store: ", game.buildKind);
+                game.containerId = 2;
+                console.log("🆔 store: ", game.containerId);
             });
             $('#buildmap_type_cave').click(function(e) {
-                game.buildKind = 76;
-                console.log("🆔 cave: ", game.buildKind);
+                game.containerId = 3;
+                console.log("🆔 cave: ", game.containerId);
             });
             $('#buildmap_type_house').click(function(e) {
-                game.buildKind = 77;
-                console.log("🆔 house: ", game.buildKind);
+                game.containerId = 4;
+                console.log("🆔 house: ", game.containerId);
             });
 
            if(game.renderer.tablet) {

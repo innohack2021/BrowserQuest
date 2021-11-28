@@ -89,6 +89,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.blockNpc = [67, 68, 70, 71, 72, 73, 76, 77, 78, 79];
             this.teleportNpc = [74, 75];
             this.buildKind = 67; // change by buttons
+            this.containerId = 1;
             this.customTeleport = false;
             this.customDest = {
                 cameraX: undefined,
@@ -2556,11 +2557,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(chatPartner)
                 this.makeNpcTalk(chatPartner, message);
             if (message) {
-                if (message == "a") {
+                if (message == "build!") {
                     this.buildMode = true;
 					this.player.build = false;
 					this.player.destroy = false;
-                } else if (message == "b") {
+                } else if (message == "unbuild!") {
                     this.buildMode = false;
 					this.player.build = false;
 					this.player.destroy = false;
