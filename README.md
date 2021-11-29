@@ -31,7 +31,7 @@ Mentta-BrowserQuest는 오픈소스 게임 엔진인 BrowserQuest를 기반으�
 
 ### 실제 서버에서 실행
 
-1. **본 레포지토리와 [API 서버 레포지토리](https://github.com/SangheonYi/mentta_express.git)**에서 필요한 파일을 모두 내려받은 후, 다음 명령어를 통해 필요한 환경을 구축해 줍니다.
+1. **본 레포지토리와** **[API 서버 레포지토리](https://github.com/SangheonYi/mentta_express.git)**에서 필요한 파일을 모두 내려받은 후, 다음 명령어를 통해 필요한 환경을 구축해 줍니다.
 
 ```bash
 apt-get update -y
