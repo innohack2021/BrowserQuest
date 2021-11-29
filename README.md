@@ -114,7 +114,7 @@ docker exec -it (컨테이너 이름) bash
 
 위의 실행 과정을 거친 후, 브라우저에서 [localhost:8080](http://localhost:8080)로 이동하면 아래 화면이 뜨며 게임이 실행됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/00077f35-279a-4412-8a0d-5711d7c8a3cc/Untitled.png)
+![image](https://user-images.githubusercontent.com/93863133/143797309-6ab34a63-0b1d-4cf5-b8ad-6cc324e1885c.png)
 
 ## 맵에 타일 설치
 
