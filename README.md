@@ -174,7 +174,6 @@ docker exec -it (컨테이너 이름) bash
   - client/js/entityfactory.js || client/js/game.js || client/js/npcs.js || client/js/sprite.js
   - client/sprites에 만든 스프라이트 type 이름 기준으로 .josn 파일을 만들어 줍니다. (ex: blockgun.json)
   - 
-## 확장
 
 ## 텔레포트 시 Docker Container로 웹사이트 실행
 
@@ -194,10 +193,6 @@ docker exec -it (컨테이너 이름) bash
 - 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
 - 무슨무슨 액션(데이터 서버에서 클라로 전달, 도커 실행 등등..)을 위해 무슨무슨 파일을 추가로 작성했습니다. 등
 
-### 확장
-
-- 이러한 방식으로 띄울 웹사이트를 변경할 수 있습니다.
-- 
 
 ## NPC에 AI챗봇 적용
 
@@ -216,10 +211,6 @@ docker exec -it (컨테이너 이름) bash
 
 - 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
 - 무슨무슨 액션을 위해 무슨무슨 파일을 추가로 작성했습니다
-
-### 확장
-
-- 이러한 방식으로 다른 챗봇을 적용할 수 있습니다.
 
 ## To-do
 
