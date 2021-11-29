@@ -18,6 +18,8 @@ Mentta-BrowserQuest는 오픈소스 게임 엔진인 BrowserQuest를 기반으�
 - 특정 좌표에서 공간이동 이벤트가 발생했을 때, Docker 컨테이너를 통해 사전 build된 이미지를 이용하여 웹사이트를 실행할 수 있도록 변경했습니다.
 - Client와 Server를 분리하여 실행하도록 함으로써 실행 속도를 높였습니다.
 
+
+
 ## 브라우저 지원 여부
 
 (본 수정본은 Chrome(정상 동작) 및 IE 10.x(동작하지 않음)만 확인한 상태이며, 아래는 기존 Browserquest의 지원 여부입니다)
@@ -90,6 +92,8 @@ BrowserQuest client server started on port 8080
 nodemon app.js
 ```
 
+
+
 ### Docker를 이용한 실행
 
 사용자 PC에서 위와 같이 실행할 경우, 기존의 파일과 충돌이 발생해 제대로 실행되지 않을 수 있습니다. 따라서 실제 호스팅이 아닌 테스트를 위해서라면 Docker를 이용해 컨테이너에서 실행하는 것이 좋은 방법일 수 있습니다.
@@ -115,6 +119,8 @@ docker exec -it (컨테이너 이름) bash
 위의 실행 과정을 거친 후, 브라우저에서 [localhost:8080](http://localhost:8080)로 이동하면 아래 화면이 뜨며 게임이 실행됩니다.
 
 ![image](https://user-images.githubusercontent.com/93863133/143797309-6ab34a63-0b1d-4cf5-b8ad-6cc324e1885c.png)
+
+
 
 ## 맵에 타일 설치
 
@@ -174,6 +180,8 @@ docker exec -it (컨테이너 이름) bash
   - client/js/entityfactory.js || client/js/game.js || client/js/npcs.js || client/js/sprite.js
   - client/sprites에 만든 스프라이트 type 이름 기준으로 .josn 파일을 만들어 줍니다. (ex: blockgun.json)
 
+
+
 ## 텔레포트 시 Docker Container로 웹사이트 실행
 
 ### 개요
@@ -187,10 +195,6 @@ docker exec -it (컨테이너 이름) bash
 - 대화창에 a를 입력하면, 블럭을 생성할 수 있는 상태가 되며, 이동이 불가능해집니다.
 - 이 상태에서(...)
 
-### 개발 방법
-
-- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
-- 무슨무슨 액션(데이터 서버에서 클라로 전달, 도커 실행 등등..)을 위해 무슨무슨 파일을 추가로 작성했습니다. 등
 
 
 ## NPC에 AI챗봇 적용
@@ -206,10 +210,7 @@ docker exec -it (컨테이너 이름) bash
 - NPC와 접촉해 Welcome 메시가 뜬다면, NPC와 대화할 수 있는 상태가 됩니다.
 - NPC와 접촉을 유지한 상태로, 하단의 메시지 버튼을 클릭하거나 엔터 키를 눌러, NPC에 할 말을 입력하면, 잠시 후 NPC가 대답합니다.
 
-### 개발 방법
 
-- 무슨무슨 파일에 클래스 이런걸 추가했습니다. (사진 또는 코드)
-- 무슨무슨 액션을 위해 무슨무슨 파일을 추가로 작성했습니다
 
 ## To-do
 
