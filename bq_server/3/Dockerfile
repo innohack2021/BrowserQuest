@@ -11,7 +11,7 @@ RUN mv localhost.dev.crt etc/ssl/certs/
 RUN mv localhost.dev.key etc/ssl/private/
 RUN chmod 600 etc/ssl/certs/localhost.dev.crt etc/ssl/private/localhost.dev.key
 
-COPY ../srcs/default.conf /etc/nginx/sites-available/default
+COPY srcs/default.conf /etc/nginx/sites-available/default
 
 #phpmyadmin
 RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-all-languages.tar.gz
@@ -20,7 +20,7 @@ RUN mv phpMyAdmin-5.0.2-all-languages phpmyadmin
 RUN mv phpmyadmin /var/www/html
 RUN cp -rp var/www/html/phpmyadmin/config.sample.inc.php var/www/html/phpmyadmin/config.inc.php
 
-COPY ../srcs/config.inc.php var/www/html/phpmyadmin/config.inc.php
+COPY srcs/config.inc.php var/www/html/phpmyadmin/config.inc.php
 RUN chmod 705 var/www/html/phpmyadmin/config.inc.php
 
 #wordpress
@@ -28,8 +28,8 @@ COPY cave.html index.html
 RUN mv index.html var/www/html/
 RUN chown -R www-data:www-data /var/www/html/index.html
 
-COPY ../srcs/init.sh /
-COPY ../srcs/start.sh /
-COPY ../srcs/re.sh /
+COPY srcs/init.sh /
+COPY srcs/start.sh /
+COPY srcs/re.sh /
 
 CMD bash init.sh
