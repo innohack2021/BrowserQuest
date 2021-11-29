@@ -48,7 +48,6 @@ module.exports = Player = Character.extend({
     //jawpark code
     this.tel_x = 0;
     this.tel_y = 0;
-    var t_count = 0;
     const client = redis.createClient({
       host: "127.0.0.1",
       port: 6379,
@@ -313,7 +312,7 @@ module.exports = Player = Character.extend({
           self.server.handlePlayerVanish(self);
           self.server.pushRelevantEntityListTo(self);
 
-          client.lrange("m:teleport", 0, -1, function (err, items) {
+          /*client.lrange("m:teleport", 0, -1, function (err, items) {
             if (err) throw err;
             var i;
             var strarry;
@@ -332,16 +331,17 @@ module.exports = Player = Character.extend({
               }
             }
             if (count != 0) t_count = count;
-          });
-          //////////
+          });*/
+ 
           setTimeout(function () {
             log.info(
-              "🧦 isteleport: " + self.isteleport + " t_count: " + t_count
+              "🧦 abe isteleport: " + self.isteleport + " t_count: " + self.server.t_count
             );
 
-            if (self.isteleport == 0 && t_count == 0) {
+            if (self.isteleport == 0 && self.server.t_count == 0) {
               log.info("TELEPORT 0 && 0 INSIDE: " + self.name);
               self.isteleport = 1;
+	      	  self.server.t_count = 1;
               (save_x = message[1]), (save_y = message[2]);
               select_image = message[3];
               log.info(
@@ -376,39 +376,38 @@ module.exports = Player = Character.extend({
                   shell.exec(dockerStart);
                   shell.echo("Error: command failed");
                 }
-                save_container = imageTag;
+                save_container = '$(docker ps -aq)';
               }
-            } else if (self.isteleport == 0 && t_count != 0) {
+            } else if (self.isteleport == 0 && self.server.t_count != 0) {
               log.info("TELEPORT 0 && !0 INSIDE: " + self.name);
               self.isteleport = 1;
+	      	  self.server.t_count = self.server.t_count + 1;
               (save_x = message[1]), (save_y = message[2]);
               self.tel_x = x;
               self.tel_y = y;
               databaseHandler.getTeleportNumber(x, y);
-            } else if (self.isteleport == 1 && t_count != 0) {
+            } else if (self.isteleport == 1 && self.server.t_count != 0) {
               log.info("TELEPORT 1 && !0 OUTSIDE: " + self.name);
               self.isteleport = 0;
+	      	  self.server.t_count = self.server.t_count - 1;
               databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
               self.tel_x = 0;
               self.tel_y = 0;
-              t_count = 0;
-            } else if (self.isteleport == 1 && t_count == 0) {
-              log.info("TELEPORT 1 && 0 OUTSIDE: " + self.name);
-              self.isteleport = 0;
-              //jawpark code
-              databaseHandler.outTeleportNumber(self.tel_x, self.tel_y);
-              self.tel_x = 0;
-              self.tel_y = 0;
-
-              log.info(`🎶 docker stop ${save_container}`);
-              //need modify
-              if (shell.exec(`docker stop ${save_container}`).code !== 0) {
-                shell.echo("Error: command failed");
-              }
-              if (shell.exec(`docker rm ${save_container}`).code !== 0) {
-                shell.echo(`Error: ${save_container} remove failed`);
-              }
+            	if (self.isteleport == 0 && self.server.t_count == 0) {
+              		log.info("TELEPORT 1 && 0 OUTSIDE: " + self.name);
+              		log.info(`🎶 docker stop ${save_container}`);
+              		//need modify
+              		if (shell.exec(`docker stop ${save_container}`).code !== 0) {
+                		shell.echo("Error: command failed");
+              		}
+              		if (shell.exec(`docker rm ${save_container}`).code !== 0) {
+                	shell.echo(`Error: ${save_container} remove failed`);
+              		}
+	     		}
             }
+ 			 log.info(
+              "🧦 aaf isteleport: " + self.isteleport + " t_count: " + self.server.t_count
+            );
           }, 1000);
         }
       } else if (action === Types.Messages.OPEN) {
