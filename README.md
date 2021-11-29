@@ -13,7 +13,7 @@ Mentta-BrowserQuest는 오픈소스 게임 엔진인 BrowserQuest를 기반으�
 
 ### 주요 수정사항
 
-- 뭐를 뭐하도록 수정, 주어진 타일을 맵 안에 설치할 수 있도록 변경했습니다.
+- 주어진 타일을 맵 안에 설치할 수 있도록 변경했습니다.
 - client의 NPC 대화 발생 부분을 수정해 NPC가 사용자의 대화를 인식할 수 있게 하고, [별도 개발한 API 서버](https://github.com/SangheonYi/mentta_express.git)를 통해 CLOVA AI 챗봇을 적용, NPC와 사용자 간 대화가 가능하도록 하였습니다.
 - 특정 좌표에서 공간이동 이벤트가 발생했을 때, Docker 컨테이너를 통해 사전 build된 이미지를 이용하여 웹사이트를 실행할 수 있도록 변경했습니다.
 - Client와 Server를 분리하여 실행하도록 함으로써 실행 속도를 높였습니다.
