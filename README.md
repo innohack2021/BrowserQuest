@@ -129,7 +129,8 @@ docker exec -it (컨테이너 이름) bash
     - type을 추가하고 추가한 스프라이트에 이름을 지어줍니다.
     - png(tilesheet)와 tmx를 저장하고 export as로 json 파일로 저장해 줍니다.
 
-(gif)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/93863133/143795789-36917cd8-34a8-4427-917d-38e5d8745494.gif)
+
 
 ### 사용 방법
 
