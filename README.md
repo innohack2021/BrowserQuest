@@ -152,7 +152,7 @@ docker exec -it (컨테이너 이름) bash
 
 ### 개발 방법
 
-1. 스프라이트를 추가하는 방법은  ##개요에서 확인해 주세요.
+1. 스프라이트를 추가하는 방법은 [기존 BrowserQues의 Wiki](https://github.com/browserquest/BrowserQuest/wiki/How-to-create-a-sprite)에서 확인해 주세요.
 2. 코드 추가
   - shared/js/gametype.js || client/shared/js/gametypes.js
   ```javascript
