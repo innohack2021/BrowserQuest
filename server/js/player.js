@@ -325,11 +325,11 @@ module.exports = Player = Character.extend({
 						self.tel_y = y;
 						databaseHandler.getTeleportNumber(x, y);
 	                    //need modify
-                        shell.cd('/mentta/bq_server')
+                        //shell.cd('/mentta/bq_server')
                         
-	                    if(shell.exec('docker build . -t bq_image_' + save_x + '_' + save_y).code !== 0) {
-		                    shell.echo('Error: command failed')
-	                    }
+	                 //   if(shell.exec('docker build . -t bq_image_' + save_x + '_' + save_y).code !== 0) {
+		         //           shell.echo('Error: command failed')
+	                 //   }
 			if (select_image >= 1){
 			 
                         	if(shell.exec('docker run -d -i -p 80:80 -p 443:443 --name ' + save_x +'_'+ save_y + ' bq_image_' + select_image).code !== 0) {
