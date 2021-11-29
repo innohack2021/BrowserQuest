@@ -205,7 +205,7 @@ docker exec -it (컨테이너 이름) bash
 
 클라우드 AI 챗봇을 NPC에 적용, 아래와 같이 직업군별로 대화를 나눌 수 있습니다. ([깃허브 링크](https://github.com/SangheonYi/mentta_express.git))
 
-(gif) 
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/93863133/143796325-82515d2c-c995-4595-bd3d-3831927ad181.gif)
 
 ### 사용 방법
 
