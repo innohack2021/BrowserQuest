@@ -173,7 +173,6 @@ docker exec -it (컨테이너 이름) bash
   수정해야할 코드
   - client/js/entityfactory.js || client/js/game.js || client/js/npcs.js || client/js/sprite.js
   - client/sprites에 만든 스프라이트 type 이름 기준으로 .josn 파일을 만들어 줍니다. (ex: blockgun.json)
-  - 
 
 ## 텔레포트 시 Docker Container로 웹사이트 실행
 
