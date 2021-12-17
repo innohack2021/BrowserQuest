@@ -22,9 +22,10 @@ RUN git clone https://github.com/innohack2021/mentta.git
 WORKDIR mentta
 RUN git pull
 RUN git checkout last
+RUN npm install -g forever
 
 EXPOSE 8000:8000
 EXPOSE 8080:8080
 EXPOSE 8081:8081
 
-CMD bash run.sh > log.txt && tail -f /dev/null
+CMD bash run.sh && tail -f /dev/null

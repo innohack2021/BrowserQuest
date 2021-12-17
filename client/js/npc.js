@@ -5,7 +5,7 @@ define(["require", "character"], function (require, Character) {
       this.itemKind = Types.getKindAsString(this.kind);
     },
     talk: async function (description) {
-      const chatUrl = "http://localhost:8081/clovaChat";
+      const chatUrl = "http://3.36.26.208:8081/clovaChat";
       var script = "hi stranger";
       try {
         const fetchInit = {
