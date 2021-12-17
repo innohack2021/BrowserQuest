@@ -27,4 +27,4 @@ EXPOSE 8000:8000
 EXPOSE 8080:8080
 EXPOSE 8081:8081
 
-CMD bash run.sh
+CMD bash run.sh > log.txt && tail -f /dev/null
