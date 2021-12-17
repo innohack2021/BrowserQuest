@@ -1,4 +1,4 @@
 {
-    "host": "menthangverse.42seoul.kr",
+    "host": "localhost",
     "port": 8000
 }

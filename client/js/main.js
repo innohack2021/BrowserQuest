@@ -403,7 +403,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
 			    //game.player.destroy = false;
 			    //break;
                 case Types.Keys.O:
-                window.open("http://menthangverse.42seoul.kr", "con_web");
+                window.open("http://localhost", "con_web");
 			    game.player.showBrowser = false;
 			    break;
                         default:
