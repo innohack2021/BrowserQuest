@@ -2,7 +2,7 @@ FROM debian:9.11
 
 RUN apt update -y
 RUN apt upgrade -y
-RUN apt install  curl vim git -y
+RUN apt install  curl vim git procps -y
 RUN apt install g++ make memcached libncurses5 redis-server -y
 
 # node install
@@ -20,8 +20,9 @@ WORKDIR ../
 # BrowserQuest
 RUN git clone https://github.com/innohack2021/mentta.git
 WORKDIR mentta
-RUN npm install -d
 
 EXPOSE 8000:8000
 EXPOSE 8080:8080
 EXPOSE 8081:8081
+
+CMD bash run.sh
