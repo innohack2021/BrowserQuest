@@ -20,8 +20,6 @@ WORKDIR ../
 # BrowserQuest
 RUN git clone https://github.com/innohack2021/mentta.git
 WORKDIR mentta
-RUN git pull
-RUN git checkout last
 
 EXPOSE 8000:8000
 EXPOSE 8080:8080
