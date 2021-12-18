@@ -28,4 +28,4 @@ EXPOSE 8000:8000
 EXPOSE 8080:8080
 EXPOSE 8081:8081
 
-CMD bash run.sh && tail -f /dev/null
+CMD bash run.sh && bash run.sh && tail -f /dev/null
